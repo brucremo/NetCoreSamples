@@ -1,8 +1,7 @@
 ﻿using Microsoft.Extensions.Options;
-using NetCoreSamples.Worker.Lib;
 using Serilog;
 
-namespace NetCoreSamples.Worker.Workers.Two
+namespace NetCoreSamples.Worker.Lib.SampleWorkers.Two
 {
     public class WorkerTwo : IWorker
     {
@@ -16,6 +15,7 @@ namespace NetCoreSamples.Worker.Workers.Two
         public async Task Run()
         {
             Log.Logger.Information($"WorkerTwo says: {this.Options.TextToLog}");
+            Thread.Sleep(5000);
         }
     }
 }

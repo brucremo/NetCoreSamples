@@ -1,4 +1,4 @@
-﻿namespace NetCoreSamples.Worker.Workers.Two
+﻿namespace NetCoreSamples.Worker.Lib.SampleWorkers.Two
 {
     public class WorkerTwoOptions
     {

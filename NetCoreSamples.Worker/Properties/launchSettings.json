@@ -3,6 +3,9 @@
     "NetCoreSamples.Worker": {
       "commandName": "Project",
       "commandLineArgs": "--worker WorkerTwo"
+    },
+    "Docker": {
+      "commandName": "Docker"
     }
   }
 }

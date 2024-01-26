@@ -1,29 +1,27 @@
 ﻿using Microsoft.Extensions.Configuration;
-using NetCoreSamples.Worker.Extensions;
+using NetCoreSamples.Logging.Lib;
 using NetCoreSamples.Worker.Lib;
 using Serilog;
-using Serilog.Events;
+using System.Reflection;
+using NetCoreSamples.Worker.Lib.Extensions;
 
 namespace NetCoreSamples.Worker
 {
-    internal class Program
+    public class Program
     {
-        static async Task Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WorkerApplication.CreateBuilder(args);
 
+            builder.WorkerAssembly = Assembly.Load("NetCoreSamples.Worker.Lib");
+
             builder.Configuration
-                .AddJsonFile($"{AppDomain.CurrentDomain.BaseDirectory}\\appsettings.json");
+                .AddJsonFile($"{AppDomain.CurrentDomain.BaseDirectory}appsettings.json");
 
             // Configure workers with extension on separate file
             builder.ConfigureWorkers();
 
-            // Configure logging
-            Log.Logger = new LoggerConfiguration()
-                .ReadFrom.Configuration(builder.Configuration)
-                .WriteTo.Console(restrictedToMinimumLevel: LogEventLevel.Information)
-                .WriteTo.File(".\\Logs\\Worker-{Date}.log", LogEventLevel.Information)
-                .CreateLogger();
+            SerilogSetup.ConfigureSerilog(builder.Configuration);
 
             // Run the worker
             try

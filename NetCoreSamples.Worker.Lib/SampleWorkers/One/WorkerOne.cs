@@ -1,8 +1,7 @@
 ﻿using Microsoft.Extensions.Options;
-using NetCoreSamples.Worker.Lib;
 using Serilog;
 
-namespace NetCoreSamples.Worker.Workers.One
+namespace NetCoreSamples.Worker.Lib.SampleWorkers.One
 {
     public class WorkerOne : IWorker
     {

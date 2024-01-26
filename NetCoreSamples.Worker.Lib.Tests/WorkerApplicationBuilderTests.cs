@@ -105,6 +105,5 @@ namespace NetCoreSamples.Worker.Lib.Tests
             // Act & Assert
             Assert.Throws<InvalidOperationException>(() => builder.Build());
         }
-
     }
 }

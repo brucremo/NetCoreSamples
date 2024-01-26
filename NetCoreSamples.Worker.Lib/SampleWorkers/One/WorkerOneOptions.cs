@@ -1,4 +1,4 @@
-﻿namespace NetCoreSamples.Worker.Workers.One
+﻿namespace NetCoreSamples.Worker.Lib.SampleWorkers.One
 {
     public class WorkerOneOptions
     {
