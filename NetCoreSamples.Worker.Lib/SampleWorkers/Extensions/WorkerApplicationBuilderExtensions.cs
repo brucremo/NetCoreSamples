@@ -31,7 +31,7 @@ namespace NetCoreSamples.Worker.Lib.Extensions
                 .Where(a => a.GetInterfaces().Contains(typeof(IWorker)))
                 .ToList();
 
-            string workerName = builder.Configuration["Worker"];    
+            string workerName = builder.Configuration["WorkerBaseOptions:Worker"];    
 
             Type requestedWorkerType = availableWorkers
                 .FirstOrDefault(a => a.Name == workerName);

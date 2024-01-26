@@ -15,7 +15,7 @@ namespace NetCoreSamples.Worker.Lib.SampleWorkers.Two
         public async Task Run()
         {
             Log.Logger.Information($"WorkerTwo says: {this.Options.TextToLog}");
-            Thread.Sleep(5000);
+            Thread.Sleep(this.Options.DelayMiliseconds);
         }
     }
 }

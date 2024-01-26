@@ -28,7 +28,8 @@ namespace NetCoreSamples.Worker.Lib
             var builder = new WorkerApplicationBuilder();
 
             builder.Configuration
-                .AddCommandLine(args, BuildSwitchMap<WorkerBaseOptions>());
+                .AddCommandLine(args, BuildSwitchMap<WorkerBaseOptions>())
+                .AddEnvironmentVariables();
 
             return builder;
         }
@@ -38,7 +39,7 @@ namespace NetCoreSamples.Worker.Lib
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        private static Dictionary<string, string> BuildSwitchMap<T>()
+        public static Dictionary<string, string> BuildSwitchMap<T>()
         {
             return typeof(T)
                 .GetProperties()
