@@ -3,8 +3,14 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace NetCoreSamples.Worker.Lib
 {
+    /// <summary>
+    /// A Worker Application containing multiple injected Workers implementing <see cref="IWorker"/>
+    /// </summary>
     public class WorkerApplication
     {
+        /// <summary>
+        /// The Service Provider
+        /// </summary>
         private IServiceProvider ServiceProvider { get; set; }
 
         public WorkerApplication(IServiceProvider serviceProvider)

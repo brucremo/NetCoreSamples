@@ -4,10 +4,29 @@ using System.Reflection;
 
 namespace NetCoreSamples.Worker.Lib
 {
+    /// <summary>
+    /// The <see cref="WorkerApplicationBuilder"/> is used to build a <see cref="WorkerApplication"/> for a Worker-based console application
+    /// </summary>
     public class WorkerApplicationBuilder
     {
-        public ConfigurationManager Configuration { get; set; } = new ConfigurationManager();
+        /// <summary>
+        /// The <see cref="IConfigurationManager"/> 
+        /// </summary>
+        public IConfigurationManager Configuration { get; set; } = new ConfigurationManager();
+
+        /// <summary>
+        /// The DI container
+        /// </summary>
         public IServiceCollection Services { get; set; } = new ServiceCollection();
+
+        /// <summary>
+        /// Assembly where the Workers are located. Defaults to the EntryAssembly
+        /// </summary>
+        public Assembly WorkerAssembly { get; set; } = Assembly.GetEntryAssembly()!;
+
+        /// <summary>
+        /// A dictionary of Worker configurations that can be invoked by the --worker CLI parameter
+        /// </summary>
         private Dictionary<string, Action<IServiceCollection, IConfiguration>> WorkerConfigurations { get; set; } = new Dictionary<string, Action<IServiceCollection, IConfiguration>>();
 
         /// <summary>
@@ -51,9 +70,14 @@ namespace NetCoreSamples.Worker.Lib
                 this.Services.BuildServiceProvider());
         }
 
+        /// <summary>
+        /// Returns the <see cref="Type"/> of the Worker requested by the --worker CLI parameter from the configured <see cref="WorkerAssembly"/>
+        /// </summary>
+        /// <param name="workerName">The Worker class name</param>
+        /// <returns>The worker <see cref="Type"/></returns>
         private Type GetWorkerTypeByName(string workerName)
         {
-            return Assembly.GetEntryAssembly()!
+            return this.WorkerAssembly
                 .GetTypes()
                 .FirstOrDefault(x => x.GetInterfaces().Contains(typeof(IWorker)) && x.Name.Contains(workerName))!;
         }

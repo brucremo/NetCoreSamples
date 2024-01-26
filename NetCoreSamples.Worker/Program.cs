@@ -1,8 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+using NetCoreSamples.Worker.Extensions;
 using NetCoreSamples.Worker.Lib;
-using NetCoreSamples.Worker.Workers.One;
-using NetCoreSamples.Worker.Workers.Two;
 using Serilog;
 using Serilog.Events;
 
@@ -17,19 +15,12 @@ namespace NetCoreSamples.Worker
             builder.Configuration
                 .AddJsonFile($"{AppDomain.CurrentDomain.BaseDirectory}\\appsettings.json");
 
-            // Configure workers
-            builder.ConfigureWorker("WorkerOne", (services, configuration) =>
-            {
-                services.Configure<WorkerOneOptions>(configuration.GetSection(nameof(WorkerOneOptions)));
-            });
-
-            builder.ConfigureWorker("WorkerTwo", (services, configuration) =>
-            {
-                services.Configure<WorkerTwoOptions>(configuration.GetSection(nameof(WorkerTwoOptions)));
-            });
+            // Configure workers with extension on separate file
+            builder.ConfigureWorkers();
 
             // Configure logging
             Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(builder.Configuration)
                 .WriteTo.Console(restrictedToMinimumLevel: LogEventLevel.Information)
                 .WriteTo.File(".\\Logs\\Worker-{Date}.log", LogEventLevel.Information)
                 .CreateLogger();
