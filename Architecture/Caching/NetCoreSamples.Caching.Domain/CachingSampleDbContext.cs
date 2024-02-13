@@ -22,7 +22,7 @@ public partial class CachingSampleDbContext : DbContext
     {
         modelBuilder.Entity<Country>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Country__3214EC07CD55C2A7");
+            entity.HasKey(e => e.Id).HasName("PK__Country__3214EC07FF9D0BEC");
 
             entity.ToTable("Country");
 
@@ -31,7 +31,7 @@ public partial class CachingSampleDbContext : DbContext
 
         modelBuilder.Entity<StateProvince>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__StatePro__3214EC073F029497");
+            entity.HasKey(e => e.Id).HasName("PK__StatePro__3214EC07A19B22D9");
 
             entity.ToTable("StateProvince");
 
@@ -45,7 +45,7 @@ public partial class CachingSampleDbContext : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__User__3214EC0757DE7661");
+            entity.HasKey(e => e.Id).HasName("PK__User__3214EC07728500E4");
 
             entity.ToTable("User");
 

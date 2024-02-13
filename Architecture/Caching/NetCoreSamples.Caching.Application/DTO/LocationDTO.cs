@@ -1,4 +1,4 @@
-﻿namespace NetCoreSamples.Application.DTO
+﻿namespace NetCoreSamples.Caching.Application.DTO
 {
     public class LocationDTO
     {

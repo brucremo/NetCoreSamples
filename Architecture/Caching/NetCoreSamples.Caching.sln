@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetCoreSamples.Caching.Lib"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCoreSamples.Caching.Domain", "NetCoreSamples.Caching.Domain\NetCoreSamples.Caching.Domain.csproj", "{B3404955-B096-426B-A5BE-7FC6366CA0FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCoreSamples.Application", "..\NetCoreSamples.Application\NetCoreSamples.Application.csproj", "{B2E4D407-305A-4BBE-A2C5-C33DCAA3601D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCoreSamples.Caching.Application", "NetCoreSamples.Caching.Application\NetCoreSamples.Caching.Application.csproj", "{E86CC156-5F0E-4FD1-9335-128A9F54AB0F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,10 +53,10 @@ Global
 		{B3404955-B096-426B-A5BE-7FC6366CA0FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3404955-B096-426B-A5BE-7FC6366CA0FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3404955-B096-426B-A5BE-7FC6366CA0FD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B2E4D407-305A-4BBE-A2C5-C33DCAA3601D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B2E4D407-305A-4BBE-A2C5-C33DCAA3601D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B2E4D407-305A-4BBE-A2C5-C33DCAA3601D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B2E4D407-305A-4BBE-A2C5-C33DCAA3601D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E86CC156-5F0E-4FD1-9335-128A9F54AB0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E86CC156-5F0E-4FD1-9335-128A9F54AB0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E86CC156-5F0E-4FD1-9335-128A9F54AB0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E86CC156-5F0E-4FD1-9335-128A9F54AB0F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
