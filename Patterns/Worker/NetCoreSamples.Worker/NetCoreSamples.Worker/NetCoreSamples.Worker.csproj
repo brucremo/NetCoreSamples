@@ -26,12 +26,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NetCoreSamples.Logging.Lib\NetCoreSamples.Logging.Lib.csproj" />
-    <ProjectReference Include="..\NetCoreSamples.Worker.Lib\NetCoreSamples.Worker.Lib.csproj" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5" />
+    <ProjectReference Include="..\..\..\..\Shared\NetCoreSamples.Logging.Lib\NetCoreSamples.Logging.Lib.csproj" />
+    <ProjectReference Include="..\Lib\NetCoreSamples.Worker.Lib\NetCoreSamples.Worker.Lib.csproj" />
   </ItemGroup>
 
 </Project>
