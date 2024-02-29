@@ -7,13 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Location\Handlers\" />
-    <Folder Include="Features\Location\Requests\" />
-    <Folder Include="Features\User\" />
+    <PackageReference Include="MediatR" Version="12.2.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MediatR" Version="12.2.0" />
+    <ProjectReference Include="..\NetCoreSamples.Caching.Domain\NetCoreSamples.Caching.Domain.csproj" />
+    <ProjectReference Include="..\NetCoreSamples.Caching.Lib\NetCoreSamples.Caching.Lib.csproj" />
   </ItemGroup>
 
 </Project>

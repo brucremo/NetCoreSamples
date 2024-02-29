@@ -1,6 +1,0 @@
-@NetCoreSamples.Caching.Client_HostAddress = http://localhost:5129
-
-GET {{NetCoreSamples.Caching.Client_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
