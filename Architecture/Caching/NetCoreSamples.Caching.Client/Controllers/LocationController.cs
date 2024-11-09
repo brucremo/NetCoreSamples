@@ -5,7 +5,6 @@ using NetCoreSamples.Caching.Application.Features.Location.Requests;
 
 namespace NetCoreSamples.Caching.Client.Controllers
 {
-
     /// <summary>
     /// The calls on this controller will hit the DB first and then the cache on subsequent calls.
     /// This is governed by the request handlers under the Application layer.
