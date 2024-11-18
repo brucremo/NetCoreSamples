@@ -1,10 +1,11 @@
 using NetCoreSamples.Logging.Lib;
 using NetCoreSamples.Caching.Lib.Extensions;
 using Microsoft.EntityFrameworkCore;
-using NetCoreSamples.Caching.Domain;
+using NetCoreSamples.Domain;
 using NetCoreSamples.Caching.Application.Features.Location.Handlers;
 using NetCoreSamples.Caching.Application.Interfaces;
 using NetCoreSamples.Caching.Persistence;
+using System.Linq;
 
 namespace NetCoreSamples.Caching.Client
 {
@@ -32,7 +33,7 @@ namespace NetCoreSamples.Caching.Client
             var connectionString = builder.Configuration
                 .GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
-            builder.Services.AddDbContext<CachingSampleDbContext>(options => options.UseSqlServer(connectionString));
+            builder.Services.AddDbContext<SampleDbContext>(options => options.UseSqlServer(connectionString));
 
             // DAOs injection
             builder.Services.AddTransient<ICountryDAO, CountryDAO>();

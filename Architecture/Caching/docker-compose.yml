@@ -1,24 +1,11 @@
 name: netcoresamples-caching
 services:
-  # Database - MSSQL
-  netcoresamples.caching.db:
-    image: "mcr.microsoft.com/mssql/server:2022-latest"
-    environment:
-      MSSQL_SA_PASSWORD: "P@ssw0rd"
-      ACCEPT_EULA: "Y"
-    ports:
-      - "1433:1433"
-    volumes:
-      - MSSQL-Caching:/var/opt/mssql
-
   # Web API
   netcoresamples.caching.client:
     image: ${DOCKER_REGISTRY-}netcoresamplescachingclient
     build:
       context: .
       dockerfile: NetCoreSamples.Caching.Client/Dockerfile
-    depends_on:
-      - netcoresamples.caching.db
 
   # Redis Cluster Setup
   # Node 0
@@ -86,8 +73,8 @@ services:
       - 'REDIS_CLUSTER_CREATOR=yes'
       
 volumes:
-    MSSQL-Caching:
-        name: MSSQL-Caching
+    netcoresamples.db:
+        name: netcoresamples.db
         external: false
     redis-cluster_data-0:
         name: redis-cluster_data-0

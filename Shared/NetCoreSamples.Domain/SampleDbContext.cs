@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using NetCoreSamples.Domain.Entities;
 
 namespace NetCoreSamples.Domain;
 
-public partial class CachingSampleDbContext : DbContext
+public partial class SampleDbContext : DbContext
 {
-    public CachingSampleDbContext(DbContextOptions<CachingSampleDbContext> options)
+    public SampleDbContext(DbContextOptions<SampleDbContext> options)
         : base(options)
     {
     }

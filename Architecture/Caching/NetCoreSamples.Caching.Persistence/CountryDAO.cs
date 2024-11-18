@@ -1,15 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NetCoreSamples.Caching.Application.Interfaces;
-using NetCoreSamples.Caching.Domain;
-using NetCoreSamples.Caching.Domain.Entities;
+using NetCoreSamples.Domain;
+using NetCoreSamples.Domain.Entities;
 
 namespace NetCoreSamples.Caching.Persistence
 {
     public class CountryDAO : ICountryDAO
     {
-        private CachingSampleDbContext Context { get; }
+        private SampleDbContext Context { get; }
 
-        public CountryDAO(CachingSampleDbContext context)
+        public CountryDAO(SampleDbContext context)
         {
             this.Context = context;
         }

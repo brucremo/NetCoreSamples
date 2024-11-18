@@ -3,16 +3,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <Name>NetCoreSamples.Caching.Database</Name>
+    <Name>NetCoreSamples.Database</Name>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
-    <ProjectGuid>{f55c2df1-9601-4b19-98de-57c20453485c}</ProjectGuid>
+    <ProjectGuid>{e4520b27-6077-4118-88de-735a13267b2f}</ProjectGuid>
     <DSP>Microsoft.Data.Tools.Schema.Sql.Sql160DatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
     <RootPath>
     </RootPath>
-    <RootNamespace>NetCoreSamples.Caching.Database</RootNamespace>
-    <AssemblyName>NetCoreSamples.Caching.Database</AssemblyName>
+    <RootNamespace>NetCoreSamples.Database</RootNamespace>
+    <AssemblyName>NetCoreSamples.Database</AssemblyName>
     <ModelCollation>1033, CI</ModelCollation>
     <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
     <DeployToDatabase>True</DeployToDatabase>
@@ -56,21 +56,18 @@
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
-    <Folder Include="dbo" />
+    <Folder Include="dbo\" />
+    <Folder Include="dbo\Tables\" />
     <Folder Include="Scripts" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="dbo\Country.sql" />
-    <Build Include="dbo\StateProvince.sql" />
-    <Build Include="dbo\User.sql" />
-  </ItemGroup>
-  <ItemGroup>
+    <Build Include="dbo\Tables\User.sql" />
+    <Build Include="dbo\Tables\StateProvince.sql" />
+    <Build Include="dbo\Tables\Country.sql" />
     <PostDeploy Include="Scripts\Script.PostDeployment1.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Local_PublishToContainer.ps1" />
+    <None Include="docker-compose.yml" />
   </ItemGroup>
-  <PropertyGroup>
-    <PostBuildEvent />
-  </PropertyGroup>
 </Project>

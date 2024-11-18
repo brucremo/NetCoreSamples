@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace NetCoreSamples.Domain.Entities;
+﻿namespace NetCoreSamples.Domain.Entities;
 
 public partial class StateProvince
 {

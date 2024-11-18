@@ -1,4 +1,4 @@
-﻿using NetCoreSamples.Caching.Domain.Entities;
+﻿using NetCoreSamples.Domain.Entities;
 
 namespace NetCoreSamples.Caching.Application.Interfaces
 {
