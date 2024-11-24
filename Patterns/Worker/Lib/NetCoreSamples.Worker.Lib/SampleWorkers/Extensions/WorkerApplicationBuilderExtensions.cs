@@ -31,12 +31,12 @@ namespace NetCoreSamples.Worker.Lib.Extensions
                 .Where(a => a.GetInterfaces().Contains(typeof(IWorker)))
                 .ToList();
 
-            string workerName = builder.Configuration["WorkerBaseOptions:Worker"];    
+            string workerName = builder.Configuration["WorkerBaseOptions:Worker"] ?? throw new InvalidOperationException("No Worker name provided!");    
 
             Type requestedWorkerType = availableWorkers
-                .FirstOrDefault(a => a.Name == workerName);
+                .FirstOrDefault(a => a.Name == workerName) ?? throw new InvalidOperationException($"No Worker found with name {workerName}"); 
 
-            if(requestedWorkerType == null)
+            if (requestedWorkerType == null)
             {
                 throw new InvalidOperationException($"Worker {workerName} not found");
             }

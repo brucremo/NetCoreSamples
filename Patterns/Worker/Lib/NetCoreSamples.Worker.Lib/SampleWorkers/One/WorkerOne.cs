@@ -12,9 +12,10 @@ namespace NetCoreSamples.Worker.Lib.SampleWorkers.One
             this.Options = options.Value;
         }
 
-        public async Task Run()
+        public Task Run()
         {
             Log.Logger.Information($"WorkerOne says: {this.Options.TextToLog}");
+            return Task.CompletedTask;
         }
     }
 }
