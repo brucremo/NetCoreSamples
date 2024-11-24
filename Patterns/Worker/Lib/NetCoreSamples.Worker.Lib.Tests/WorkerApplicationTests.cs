@@ -30,7 +30,7 @@ namespace NetCoreSamples.Worker.Lib.Tests
             var mockServiceProvider = new Mock<IServiceProvider>();
             mockServiceProvider
                 .Setup(sp => sp.GetService(typeof(IWorker)))
-                .Returns(null);
+                .Returns(null!);
             var workerApplication = new WorkerApplication(mockServiceProvider.Object);
 
             // Act & Assert

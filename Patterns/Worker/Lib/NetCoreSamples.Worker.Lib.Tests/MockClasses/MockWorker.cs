@@ -2,8 +2,9 @@
 {
     internal class MockWorker : IWorker
     {
-        public async Task Run()
+        public Task Run()
         {
+            return Task.CompletedTask;
         }
     }
 }

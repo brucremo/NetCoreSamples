@@ -39,6 +39,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCoreSamples.Worker", "Pa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCoreSamples.WorkerService", "Patterns\Worker\NetCoreSamples.WorkerService\NetCoreSamples.WorkerService.csproj", "{561D1156-BCEF-4C51-9971-F6675FD10558}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{6AC40E99-D9C5-48DA-85E7-4884B05C5263}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCoreSamples.Worker.Lib.Tests", "Patterns\Worker\Lib\NetCoreSamples.Worker.Lib.Tests\NetCoreSamples.Worker.Lib.Tests.csproj", "{168AA1E1-8651-4727-BB4F-EEAC924B56D0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -91,6 +95,10 @@ Global
 		{561D1156-BCEF-4C51-9971-F6675FD10558}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{561D1156-BCEF-4C51-9971-F6675FD10558}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{561D1156-BCEF-4C51-9971-F6675FD10558}.Release|Any CPU.Build.0 = Release|Any CPU
+		{168AA1E1-8651-4727-BB4F-EEAC924B56D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{168AA1E1-8651-4727-BB4F-EEAC924B56D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{168AA1E1-8651-4727-BB4F-EEAC924B56D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{168AA1E1-8651-4727-BB4F-EEAC924B56D0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -109,5 +117,6 @@ Global
 		{DCE3D112-3FE5-4990-8188-59C0C47FFC18} = {B9C2B992-7372-4655-9867-9196F1424097}
 		{A73B47ED-6170-451D-8375-068A35AFC81A} = {DCE3D112-3FE5-4990-8188-59C0C47FFC18}
 		{561D1156-BCEF-4C51-9971-F6675FD10558} = {DCE3D112-3FE5-4990-8188-59C0C47FFC18}
+		{168AA1E1-8651-4727-BB4F-EEAC924B56D0} = {6AC40E99-D9C5-48DA-85E7-4884B05C5263}
 	EndGlobalSection
 EndGlobal

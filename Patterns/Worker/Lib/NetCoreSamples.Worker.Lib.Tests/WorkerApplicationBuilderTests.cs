@@ -40,7 +40,7 @@ namespace NetCoreSamples.Worker.Lib.Tests
             var mockConfiguration = new Mock<IConfigurationManager>();
             mockConfiguration
                 .Setup(c => c["WorkerBaseOptions:Worker"])
-                .Returns((string)null);
+                .Returns((string)null!);
             var builder = new WorkerApplicationBuilder
             {
                 Configuration = mockConfiguration.Object,
