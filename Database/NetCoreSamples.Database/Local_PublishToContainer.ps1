@@ -7,5 +7,3 @@ $MSBUILD = &"${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.
 & $MSBUILD .\NetCoreSamples.Database.sqlproj /P:Configuration=Release 
 
 SqlPackage /Action:Publish /SourceFile:"bin\Release\NetCoreSamples.Database.dacpac" /TargetConnectionString:"Server=localhost;Initial Catalog=NetCoreSamples.Database;User ID=sa;Password=P@ssw0rd;TrustServerCertificate=True;Encrypt=True"
-
-docker compose -f ./docker-compose.yml down
