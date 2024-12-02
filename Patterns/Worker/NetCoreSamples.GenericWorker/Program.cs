@@ -43,7 +43,7 @@ namespace NetCoreSamples.GenericWorker
             string assemblyName = builder.Configuration["WorkerOptions:Assembly"] ?? throw new InvalidOperationException("No Worker Assembly provided!");
             string workerName = builder.Configuration["WorkerOptions:Name"] ?? throw new InvalidOperationException("No Worker name provided!");
 
-            List<Type> availableWorkers = Assembly.Load(assemblyName)
+            List<Type> availableWorkers = Assembly.LoadFrom(assemblyName)
                 .GetTypes()
                 .Where(a => a.GetInterfaces().Contains(typeof(IWorker)))
                 .ToList();

@@ -13,6 +13,14 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCoreSamples.Messaging.Lib", "NetCoreSamples.Messaging.Lib\NetCoreSamples.Messaging.Lib.csproj", "{BD0A970F-AFB7-4F8A-B798-FCA21DDE50FE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCoreSamples.Worker.Lib", "..\..\Patterns\Worker\Lib\NetCoreSamples.Worker.Lib\NetCoreSamples.Worker.Lib.csproj", "{B1B563E2-B2C4-4E93-9B8E-C3B508F946EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCoreSamples.GenericWorker", "..\..\Patterns\Worker\NetCoreSamples.GenericWorker\NetCoreSamples.GenericWorker.csproj", "{0222093C-E7ED-45BC-9EDC-B9E4228BFA66}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{58534DCF-48A3-4515-A530-135CC8A32BF9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCoreSamples.Messaging.Workers", "NetCoreSamples.Messaging.Workers\NetCoreSamples.Messaging.Workers.csproj", "{71E4F5A9-1B71-404F-A3B6-3B9B96A6AAF5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +43,18 @@ Global
 		{BD0A970F-AFB7-4F8A-B798-FCA21DDE50FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD0A970F-AFB7-4F8A-B798-FCA21DDE50FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD0A970F-AFB7-4F8A-B798-FCA21DDE50FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1B563E2-B2C4-4E93-9B8E-C3B508F946EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1B563E2-B2C4-4E93-9B8E-C3B508F946EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1B563E2-B2C4-4E93-9B8E-C3B508F946EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1B563E2-B2C4-4E93-9B8E-C3B508F946EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0222093C-E7ED-45BC-9EDC-B9E4228BFA66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0222093C-E7ED-45BC-9EDC-B9E4228BFA66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0222093C-E7ED-45BC-9EDC-B9E4228BFA66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0222093C-E7ED-45BC-9EDC-B9E4228BFA66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71E4F5A9-1B71-404F-A3B6-3B9B96A6AAF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71E4F5A9-1B71-404F-A3B6-3B9B96A6AAF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71E4F5A9-1B71-404F-A3B6-3B9B96A6AAF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71E4F5A9-1B71-404F-A3B6-3B9B96A6AAF5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -42,5 +62,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{89EEC1C0-45E5-4883-A43B-9AB87701CB71} = {7DFB1126-DA47-4BBB-B5E1-D29316EB5806}
 		{BD0A970F-AFB7-4F8A-B798-FCA21DDE50FE} = {7DFB1126-DA47-4BBB-B5E1-D29316EB5806}
+		{B1B563E2-B2C4-4E93-9B8E-C3B508F946EB} = {7DFB1126-DA47-4BBB-B5E1-D29316EB5806}
+		{0222093C-E7ED-45BC-9EDC-B9E4228BFA66} = {7DFB1126-DA47-4BBB-B5E1-D29316EB5806}
+		{71E4F5A9-1B71-404F-A3B6-3B9B96A6AAF5} = {58534DCF-48A3-4515-A530-135CC8A32BF9}
 	EndGlobalSection
 EndGlobal

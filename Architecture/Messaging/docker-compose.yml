@@ -14,3 +14,32 @@ services:
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+
+  # Worker 1 - Message Processor
+  netcoresamples.messaging.processor.worker:
+    container_name: "NetCoreSamples.Messaging.Processor.Worker"
+    image: ${DOCKER_REGISTRY-}netcoresamplesmessagingprocessorworker
+    build:
+      context: .
+      dockerfile: ../../Patterns/Worker/NetCoreSamples.GenericWorker/Dockerfile
+    environment:
+      - WORKER_MODE=service
+      - WorkerOptions__Assembly=/app/workers/NetCoreSamples.Messaging.Workers.dll
+      - WorkerOptions__Name=MessageProcessorWorker
+    volumes:
+      - ./NetCoreSamples.Messaging.Workers/bin/Debug/net9.0:/app/workers
+
+  # Worker 2 - Message Publisher
+  netcoresamples.messaging.publisher.worker:
+    container_name: "NetCoreSamples.Messaging.Publisher.Worker"
+    image: ${DOCKER_REGISTRY-}netcoresamplesmessagingpublisherworker
+    build:
+      context: .
+      dockerfile: ../../Patterns/Worker/NetCoreSamples.GenericWorker/Dockerfile
+    environment:
+      - WORKER_MODE=service
+      - WorkerOptions__Assembly=/app/workers/NetCoreSamples.Messaging.Workers.dll
+      - WorkerOptions__Name=MessagePublisherWorker
+    volumes:
+      - ./NetCoreSamples.Messaging.Workers/bin/Debug/net9.0:/app/workers
+
