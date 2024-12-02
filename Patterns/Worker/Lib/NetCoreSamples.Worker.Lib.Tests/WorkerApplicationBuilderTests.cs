@@ -9,23 +9,23 @@ namespace NetCoreSamples.Worker.Lib.Tests
     public class WorkerApplicationBuilderTests
     {
         [Fact]
-        public void Build_AddsTransientServiceOfWorkerType()
+        public void BuildWithNamedWorkers_AddsTransientServiceOfWorkerType()
         {
             // Arrange
             var workerName = "MockWorker";
             var mockConfiguration = new Mock<IConfigurationManager>();
             mockConfiguration
-                .Setup(c => c["WorkerBaseOptions:Worker"])
+                .Setup(c => c["WorkerOptions:Name"])
                 .Returns(workerName);
             var builder = new WorkerApplicationBuilder
             {
                 Configuration = mockConfiguration.Object,
-                WorkerAssembly = typeof(MockWorker).Assembly
+                Assembly = typeof(MockWorker).Assembly
             };
             builder.ConfigureWorker(workerName, (services, configuration) => { });
 
             // Act
-            var application = builder.Build();
+            var application = builder.BuildWithNamedWorkers();
 
             // Assert
             var serviceDescriptor = builder.Services.Single(sd => sd.ServiceType == typeof(IWorker));
@@ -34,76 +34,76 @@ namespace NetCoreSamples.Worker.Lib.Tests
         }
 
         [Fact]
-        public void Build_ThrowsException_WhenWorkerNameIsNull()
+        public void BuildWithNamedWorkers_ThrowsException_WhenWorkerNameIsNull()
         {
             // Arrange
             var mockConfiguration = new Mock<IConfigurationManager>();
             mockConfiguration
-                .Setup(c => c["WorkerBaseOptions:Worker"])
+                .Setup(c => c["WorkerOptions:Name"])
                 .Returns((string)null!);
             var builder = new WorkerApplicationBuilder
             {
                 Configuration = mockConfiguration.Object,
-                WorkerAssembly = typeof(MockWorker).Assembly
+                Assembly = typeof(MockWorker).Assembly
             };
 
             // Act & Assert
-            Assert.Throws<InvalidOperationException>(() => builder.Build());
+            Assert.Throws<InvalidOperationException>(() => builder.BuildWithNamedWorkers());
         }
 
         [Fact]
-        public void Build_ThrowsException_WhenWorkerTypeNotFound()
+        public void BuildWithNamedWorkers_ThrowsException_WhenWorkerTypeNotFound()
         {
             // Arrange
             var workerName = "NonExistentWorker";
             var mockConfiguration = new Mock<IConfigurationManager>();
             mockConfiguration
-                .Setup(c => c["WorkerBaseOptions:Worker"])
+                .Setup(c => c["WorkerOptions:Name"])
                 .Returns(workerName);
             var builder = new WorkerApplicationBuilder
             {
                 Configuration = mockConfiguration.Object,
-                WorkerAssembly = typeof(MockWorker).Assembly
+                Assembly = typeof(MockWorker).Assembly
             };
 
             // Act & Assert
-            Assert.Throws<InvalidOperationException>(() => builder.Build());
+            Assert.Throws<InvalidOperationException>(() => builder.BuildWithNamedWorkers());
         }
 
         [Fact]
-        public void Build_ThrowsException_WhenWorkerNameIsEmpty()
+        public void BuildWithNamedWorkers_ThrowsException_WhenWorkerNameIsEmpty()
         {
             // Arrange
             var mockConfiguration = new Mock<IConfigurationManager>();
             mockConfiguration
-                .Setup(c => c["WorkerBaseOptions:Worker"])
+                .Setup(c => c["WorkerOptions:Name"])
                 .Returns(string.Empty);
             var builder = new WorkerApplicationBuilder
             {
                 Configuration = mockConfiguration.Object,
-                WorkerAssembly = typeof(MockWorker).Assembly
+                Assembly = typeof(MockWorker).Assembly
             };
 
             // Act & Assert
-            Assert.Throws<KeyNotFoundException>(() => builder.Build());
+            Assert.Throws<KeyNotFoundException>(() => builder.BuildWithNamedWorkers());
         }
 
         [Fact]
-        public void Build_ThrowsException_WhenWorkerNameIsWhitespace()
+        public void BuildWithNamedWorkers_ThrowsException_WhenWorkerNameIsWhitespace()
         {
             // Arrange
             var mockConfiguration = new Mock<IConfigurationManager>();
             mockConfiguration
-                .Setup(c => c["WorkerBaseOptions:Worker"])
+                .Setup(c => c["WorkerOptions:Name"])
                 .Returns("   ");
             var builder = new WorkerApplicationBuilder
             {
                 Configuration = mockConfiguration.Object,
-                WorkerAssembly = typeof(MockWorker).Assembly
+                Assembly = typeof(MockWorker).Assembly
             };
 
             // Act & Assert
-            Assert.Throws<InvalidOperationException>(() => builder.Build());
+            Assert.Throws<InvalidOperationException>(() => builder.BuildWithNamedWorkers());
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace NetCoreSamples.Worker.Lib
+﻿using Microsoft.Extensions.Configuration;
+
+namespace NetCoreSamples.Worker.Lib
 {
     /// <summary>
     /// The basic interface for a Worker
@@ -8,7 +10,8 @@
         /// <summary>
         /// Runs the Worker implementation tasks
         /// </summary>
+        /// <param name="configuration">The configuration</param>
         /// <returns></returns>
-        Task Run();
+        Task Run(IConfiguration? configuration = null);
     }
 }

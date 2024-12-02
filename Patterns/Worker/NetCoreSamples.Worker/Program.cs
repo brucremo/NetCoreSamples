@@ -13,7 +13,7 @@ namespace NetCoreSamples.Worker
         {
             var builder = WorkerApplication.CreateBuilder(args);
 
-            builder.WorkerAssembly = Assembly.Load("NetCoreSamples.Worker.Lib");
+            builder.Assembly = Assembly.Load("NetCoreSamples.Worker.Lib");
 
             builder.Configuration
                 .AddJsonFile($"{AppDomain.CurrentDomain.BaseDirectory}appsettings.json");
@@ -28,7 +28,7 @@ namespace NetCoreSamples.Worker
             {
                 Log.Logger.Information($"Starting @ UTC {DateTime.UtcNow}");
 
-                var app = builder.Build();
+                var app = builder.BuildWithNamedWorkers();
 
                 await app.Run();
 

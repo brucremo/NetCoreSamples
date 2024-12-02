@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NetCoreSamples.Worker.Lib.SampleWorkers.One;
 using NetCoreSamples.Worker.Lib.SampleWorkers.Two;
@@ -31,7 +30,7 @@ namespace NetCoreSamples.Worker.Lib.Extensions
                 .Where(a => a.GetInterfaces().Contains(typeof(IWorker)))
                 .ToList();
 
-            string workerName = builder.Configuration["WorkerBaseOptions:Worker"] ?? throw new InvalidOperationException("No Worker name provided!");    
+            string workerName = builder.Configuration["WorkerOptions:Name"] ?? throw new InvalidOperationException("No Worker name provided!");    
 
             Type requestedWorkerType = availableWorkers
                 .FirstOrDefault(a => a.Name == workerName) ?? throw new InvalidOperationException($"No Worker found with name {workerName}"); 

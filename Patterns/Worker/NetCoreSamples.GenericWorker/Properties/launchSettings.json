@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "NetCoreSamples.GenericWorker": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}

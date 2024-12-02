@@ -11,7 +11,7 @@ namespace NetCoreSamples.WorkerService
             var builder = Host.CreateApplicationBuilder(args);
 
             builder.Configuration
-                .AddCommandLine(args, WorkerApplication.BuildSwitchMap<WorkerBaseOptions>());
+                .AddCommandLine(args, WorkerApplication.BuildSwitchMap<WorkerOptions>());
 
             SerilogSetup.ConfigureSerilog(builder.Configuration);
 

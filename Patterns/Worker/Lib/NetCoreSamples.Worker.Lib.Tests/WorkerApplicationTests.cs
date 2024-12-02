@@ -1,4 +1,5 @@
-﻿using Moq;
+﻿using Microsoft.Extensions.Configuration;
+using Moq;
 using Xunit;
 
 namespace NetCoreSamples.Worker.Lib.Tests
@@ -20,7 +21,7 @@ namespace NetCoreSamples.Worker.Lib.Tests
             await workerApplication.Run();
 
             // Assert
-            mockWorker.Verify(w => w.Run(), Times.Once);
+            mockWorker.Verify(w => w.Run(It.IsAny<IConfiguration?>()), Times.Once);
         }
 
         [Fact]
@@ -43,7 +44,7 @@ namespace NetCoreSamples.Worker.Lib.Tests
             // Arrange
             var mockWorker = new Mock<IWorker>();
             mockWorker
-                .Setup(w => w.Run())
+                .Setup(w => w.Run(It.IsAny<IConfiguration?>()))
                 .Throws(new Exception("Test exception"));
             var mockServiceProvider = new Mock<IServiceProvider>();
             mockServiceProvider

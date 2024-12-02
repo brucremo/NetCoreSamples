@@ -28,7 +28,7 @@ namespace NetCoreSamples.Worker.Lib
             var builder = new WorkerApplicationBuilder();
 
             builder.Configuration
-                .AddCommandLine(args, BuildSwitchMap<WorkerBaseOptions>())
+                .AddCommandLine(args, BuildSwitchMap<WorkerOptions>())
                 .AddEnvironmentVariables();
 
             return builder;
@@ -50,9 +50,9 @@ namespace NetCoreSamples.Worker.Lib
         /// Runs the Worker Application
         /// </summary>
         /// <returns></returns>
-        public async Task Run()
+        public async Task Run(IConfiguration? configuration = null)
         {
-            await this.ServiceProvider.GetService<IWorker>()!.Run();
+            await this.ServiceProvider.GetService<IWorker>()!.Run(configuration);
         }
     }
 }

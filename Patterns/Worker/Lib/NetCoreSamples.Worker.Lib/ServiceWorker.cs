@@ -1,10 +1,16 @@
-using NetCoreSamples.Worker.Lib;
+﻿using Microsoft.Extensions.Hosting;
 using Serilog;
 
-namespace NetCoreSamples.WorkerService
+namespace NetCoreSamples.Worker.Lib
 {
+    /// <summary>
+    /// The Service Worker class
+    /// </summary>
     public class ServiceWorker : BackgroundService
     {
+        /// <summary>
+        /// The Worker instance
+        /// </summary>
         private IWorker Worker;
 
         public ServiceWorker(IWorker worker)
