@@ -1,10 +1,8 @@
-﻿using Microsoft.Extensions.Configuration;
-
-namespace NetCoreSamples.Worker.Lib.Tests.MockClasses
+﻿namespace NetCoreSamples.Worker.Lib.Tests.MockClasses
 {
     internal class MockWorker : IWorker
     {
-        public Task Run(IConfiguration? configuration = null)
+        public Task Run()
         {
             return Task.CompletedTask;
         }

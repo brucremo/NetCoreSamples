@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using Moq;
+﻿using Moq;
 using Xunit;
 
 namespace NetCoreSamples.Worker.Lib.Tests
@@ -21,11 +20,11 @@ namespace NetCoreSamples.Worker.Lib.Tests
             await workerApplication.Run();
 
             // Assert
-            mockWorker.Verify(w => w.Run(It.IsAny<IConfiguration?>()), Times.Once);
+            mockWorker.Verify(w => w.Run(), Times.Once);
         }
 
         [Fact]
-        public async Task Run_ThrowsException_WhenGetServiceReturnsNull()
+        public async Task Run_ThrowsInvalidOperationException_WhenGetServiceReturnsNull()
         {
             // Arrange
             var mockServiceProvider = new Mock<IServiceProvider>();
@@ -35,17 +34,18 @@ namespace NetCoreSamples.Worker.Lib.Tests
             var workerApplication = new WorkerApplication(mockServiceProvider.Object);
 
             // Act & Assert
-            await Assert.ThrowsAsync<NullReferenceException>(() => workerApplication.Run());
+            await Assert.ThrowsAsync<InvalidOperationException>(() => workerApplication.Run());
         }
 
         [Fact]
         public async Task Run_RethrowsException_ThrownByIWorkerRun()
         {
             // Arrange
+            var expected = new Exception("Test exception");
             var mockWorker = new Mock<IWorker>();
             mockWorker
-                .Setup(w => w.Run(It.IsAny<IConfiguration?>()))
-                .Throws(new Exception("Test exception"));
+                .Setup(w => w.Run())
+                .Throws(expected);
             var mockServiceProvider = new Mock<IServiceProvider>();
             mockServiceProvider
                 .Setup(sp => sp.GetService(typeof(IWorker)))
@@ -53,8 +53,8 @@ namespace NetCoreSamples.Worker.Lib.Tests
             var workerApplication = new WorkerApplication(mockServiceProvider.Object);
 
             // Act & Assert
-            await Assert.ThrowsAsync<Exception>(() => workerApplication.Run());
+            var result = await Assert.ThrowsAsync<Exception>(() => workerApplication.Run());
+            Assert.Same(expected, result);
         }
-
     }
 }

@@ -1,3 +1,10 @@
+version: '3.4'
+ 
+x-common-variables: &common-variables
+    WORKER_MODE: service
+    MessageHubClientOptions__EndpointUrl: "http://host.docker.internal:8080"
+    MessageHubClientOptions__DefaultHub: "tasks"
+
 services:
   # Messaging API
   netcoresamples.messaging.signalr:
@@ -7,10 +14,12 @@ services:
       context: .
       dockerfile: NetCoreSamples.Messaging.SignalR/Dockerfile
     ports:
-      - "44350:8081"
+      - "8081:8081"
+      - "8080:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTPS_PORTS=8081
+      - ASPNETCORE_HTTP_PORTS=8080
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
@@ -21,13 +30,12 @@ services:
     image: ${DOCKER_REGISTRY-}netcoresamplesmessagingprocessorworker
     build:
       context: .
-      dockerfile: ../../Patterns/Worker/NetCoreSamples.GenericWorker/Dockerfile
+      dockerfile: NetCoreSamples.Messaging.Worker/Dockerfile
     environment:
-      - WORKER_MODE=service
-      - WorkerOptions__Assembly=/app/workers/NetCoreSamples.Messaging.Workers.dll
-      - WorkerOptions__Name=MessageProcessorWorker
-    volumes:
-      - ./NetCoreSamples.Messaging.Workers/bin/Debug/net9.0:/app/workers
+      <<: *common-variables
+      WorkerOptions__Name: MessageProcessor
+    depends_on: 
+      - netcoresamples.messaging.signalr
 
   # Worker 2 - Message Publisher
   netcoresamples.messaging.publisher.worker:
@@ -35,11 +43,10 @@ services:
     image: ${DOCKER_REGISTRY-}netcoresamplesmessagingpublisherworker
     build:
       context: .
-      dockerfile: ../../Patterns/Worker/NetCoreSamples.GenericWorker/Dockerfile
+      dockerfile: NetCoreSamples.Messaging.Worker/Dockerfile
     environment:
-      - WORKER_MODE=service
-      - WorkerOptions__Assembly=/app/workers/NetCoreSamples.Messaging.Workers.dll
-      - WorkerOptions__Name=MessagePublisherWorker
-    volumes:
-      - ./NetCoreSamples.Messaging.Workers/bin/Debug/net9.0:/app/workers
+      <<: *common-variables
+      WorkerOptions__Name: MessagePublisher
+    depends_on: 
+      - netcoresamples.messaging.signalr
 

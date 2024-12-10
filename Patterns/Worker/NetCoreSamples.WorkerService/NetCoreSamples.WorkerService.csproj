@@ -18,5 +18,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\Shared\NetCoreSamples.Logging.Lib\NetCoreSamples.Logging.Lib.csproj" />
     <ProjectReference Include="..\Lib\NetCoreSamples.Worker.Lib\NetCoreSamples.Worker.Lib.csproj" />
+    <ProjectReference Include="..\NetCoreSamples.Worker.SampleWorkers\NetCoreSamples.Worker.SampleWorkers.csproj" />
   </ItemGroup>
 </Project>

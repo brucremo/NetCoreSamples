@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using NetCoreSamples.Logging.Lib;
 using System.Reflection;
 
 namespace NetCoreSamples.Worker.Lib
@@ -15,14 +17,33 @@ namespace NetCoreSamples.Worker.Lib
         public IConfigurationManager Configuration { get; set; } = new ConfigurationManager();
 
         /// <summary>
-        /// The DI container
+        /// The <see cref="IServiceCollection"/>
         /// </summary>
-        public IServiceCollection Services { get; set; } = new ServiceCollection();
+        public IServiceCollection Services
+        {
+            get
+            {
+                return HostApplicationBuilder?.Services ?? _services;
+            }
+            private set
+            {
+                _services = value;
+            }
+        }
+
+        private IServiceCollection _services = new ServiceCollection();
 
         /// <summary>
         /// Assembly where the Workers are located. Defaults to the EntryAssembly
         /// </summary>
-        public Assembly? Assembly { get; set; }
+        public Assembly? Assembly { get; private set; }
+
+        /// <summary>
+        /// The available Worker implementations in the configured Assembly
+        /// </summary>
+        public List<Type> AvailableWorkerImplementations => Assembly?.GetTypes()
+            .Where(a => a.GetInterfaces().Contains(typeof(IWorker)))
+            .ToList() ?? throw new InvalidOperationException("No Assembly was set for this WorkerApplicationBuilder!");
 
         /// <summary>
         /// The Worker type to be used
@@ -35,35 +56,36 @@ namespace NetCoreSamples.Worker.Lib
         private Dictionary<string, Action<IServiceCollection, IConfiguration>?> WorkerConfigurations { get; set; } = new();
 
         /// <summary>
+        /// The <see cref="HostApplicationBuilder"/> to be used for a service-based worker application
+        /// </summary>
+        private HostApplicationBuilder? HostApplicationBuilder { get; set; }
+
+        internal WorkerApplicationBuilder()
+        {
+        }
+
+        internal WorkerApplicationBuilder(HostApplicationBuilder hostApplicationBuilder)
+        {
+            HostApplicationBuilder = hostApplicationBuilder;
+        }
+
+        /// <summary>
         /// Adds a new preconfigured Worker and its DI setup to the <see cref="WorkerApplicationBuilder"/> that can be invoked
         /// </summary>
         /// <param name="workerName">The name of the Worker, matching the CLI parameter --worker / WorkerOptions:Name</param>
         /// <param name="action">The actual Worker setup with required services to be injected into the DI container </param>
         public void ConfigureWorker(string workerName, Action<IServiceCollection, IConfiguration>? action = null)
         {
-            this.WorkerConfigurations.Add(workerName, action);
-        }
-
-        /// <summary>
-        /// Builds the <see cref="WorkerApplication"/> for a generic Worker configured at runtime
-        /// </summary>
-        /// <returns>A configured <see cref="WorkerApplication"/>.</returns>
-        public WorkerApplication BuildGeneric()
-        {
-            this.Services.AddTransient((s) => (IWorker)ActivatorUtilities
-                .CreateInstance(s, WorkerType ?? throw new InvalidOperationException($"No Worker type setup. Please call UseConfiguredWorkerType")));
-
-            return new WorkerApplication(
-                this.Services.BuildServiceProvider());
+            WorkerConfigurations.Add(workerName, action);
         }
 
         /// <summary>
         /// Builds the <see cref="WorkerApplication"/> for the preconfigured Worker setup requested by the --worker CLI parameter 
         /// </summary>
         /// <returns>A configured <see cref="WorkerApplication"/>.</returns>
-        public WorkerApplication BuildWithNamedWorkers()
+        public WorkerApplication Build(string? workerNameConfiguration = null)
         {
-            string workerName = this.Configuration["WorkerOptions:Name"] ??
+            string workerName = Configuration[workerNameConfiguration ?? "WorkerOptions:Name"] ??
                 throw new InvalidOperationException(
                     $"The WorkerOptions:Name cannot be null. Make sure the CLI parameter --worker is provided");
 
@@ -72,17 +94,27 @@ namespace NetCoreSamples.Worker.Lib
                 WorkerType = GetWorkerTypeByName(workerName) ?? throw new InvalidOperationException($"No Worker found with the name {workerName}");
             }
 
-            this.Services.AddTransient((s) => (IWorker) ActivatorUtilities.CreateInstance(s, WorkerType));
+            Services.AddTransient((s) => (IWorker) ActivatorUtilities.CreateInstance(s, WorkerType));
 
-            this.WorkerConfigurations[workerName]!
-                .Invoke(Services, this.Configuration);
+            var workerSetupAction = WorkerConfigurations[workerName];
 
-            return new WorkerApplication(
-                this.Services.BuildServiceProvider());
+            if (workerSetupAction is not null)
+            {
+                workerSetupAction.Invoke(Services, Configuration);
+            }
+
+            Services.Configure<WorkerOptions>(Configuration.GetSection(nameof(WorkerOptions)));
+
+            if (HostApplicationBuilder is not null)
+            {
+                return new WorkerApplication(Services.BuildServiceProvider(), HostApplicationBuilder.Build());
+            }
+
+            return new WorkerApplication(Services.BuildServiceProvider());
         }
 
         /// <summary>
-        /// Sets the Worker assembly to be used by the <see cref="WorkerApplicationBuilder"/>
+        /// Sets the Worker assembly where the <see cref="IWorker"/> implementations exist to be used by the <see cref="WorkerApplicationBuilder"/>
         /// </summary>
         /// <param name="configurationKeyValue">The configuration name with the assembly to be used</param>
         /// <returns>The builder instance</returns>
@@ -90,6 +122,27 @@ namespace NetCoreSamples.Worker.Lib
         {
             Assembly = Assembly.Load(
                 Configuration.GetValue<string>(configurationKeyValue) ?? throw new InvalidOperationException($"There's no value configured for {configurationKeyValue}"));
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the Worker assembly where the <see cref="IWorker"/> implementations exist to be used by the <see cref="WorkerApplicationBuilder"/>
+        /// </summary>
+        /// <param name="assembly">The assembly to be used</param>
+        /// <returns>The builder instance</returns>
+        public WorkerApplicationBuilder WithAssembly(Assembly assembly)
+        {
+            Assembly = assembly;
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the Worker assembly where the <see cref="IWorker"/> implementations exist to be used by the <see cref="WorkerApplicationBuilder"/>
+        /// </summary>
+        /// <returns>The builder instance</returns>
+        public WorkerApplicationBuilder WithCallingAssembly()
+        {
+            Assembly = Assembly.GetCallingAssembly();
             return this;
         }
 
@@ -105,18 +158,28 @@ namespace NetCoreSamples.Worker.Lib
         }
 
         /// <summary>
+        /// Uses Serilog for logging
+        /// </summary>
+        /// <returns>The builder instance</returns>
+        public WorkerApplicationBuilder UseSerilog()
+        {
+            SerilogSetup.ConfigureSerilog(Configuration);
+            return this;
+        }
+
+        /// <summary>
         /// Returns the <see cref="Type"/> of the Worker requested by the --worker CLI parameter from the configured <see cref="Assembly"/>
         /// </summary>
         /// <param name="workerName">The Worker class name</param>
         /// <returns>The worker <see cref="Type"/></returns>
         private Type? GetWorkerTypeByName(string workerName)
         {
-            if (this.Assembly == null)
+            if (Assembly == null)
             {
                 throw new InvalidOperationException("No Worker assembly configured. Use UseConfiguredAssembly to set the Worker assembly before calling UseConfiguredWorkerType");
             }
 
-            return this.Assembly
+            return Assembly
                 .GetTypes()
                 .FirstOrDefault(x => x.GetInterfaces().Contains(typeof(IWorker)) && x.Name.Contains(workerName))!;
         }

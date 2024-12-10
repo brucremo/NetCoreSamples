@@ -18,11 +18,11 @@
         /// <summary>
         /// On connection fail retry count
         /// </summary>
-        public int OnConnectionFailRetryCount { get; set; } = 10;
+        public int OnConnectionFailRetryCount { get; set; } = 20;
 
         /// <summary>
         /// Retry sleep duration in seconds
         /// </summary>
-        public int RetrySleepDurationInSeconds { get; set; } = 10;
+        public int RetrySleepDurationInSeconds { get; set; } = 2;
     }
 }

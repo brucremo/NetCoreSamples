@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
-using Polly;
+using NetCoreSamples.Messaging.Lib.Resiliency;
 using Polly.Retry;
 using Serilog;
 
@@ -10,7 +10,7 @@ namespace NetCoreSamples.Messaging.Lib.Services
     /// <summary>
     /// MessageHub client service
     /// </summary>
-    public class MessageHubClientService : IHostedService
+    public class MessageHubClientService : IMessageHubClientService
     {
         /// <summary>
         /// The hub connection
@@ -29,9 +29,9 @@ namespace NetCoreSamples.Messaging.Lib.Services
 
         public MessageHubClientService(IOptions<MessageHubClientOptions> options, IHostEnvironment environment)
         {
-            this.Options = options.Value;
-            this.Connection = new HubConnectionBuilder()
-                .WithUrl($"{this.Options.EndpointUrl}/{this.Options.DefaultHub}", options => {
+            Options = options.Value;
+            Connection = new HubConnectionBuilder()
+                .WithUrl($"{Options.EndpointUrl}/{Options.DefaultHub}", options => {
                     options.UseDefaultCredentials = true;
                     options.HttpMessageHandlerFactory = (msg) =>
                     {
@@ -48,31 +48,55 @@ namespace NetCoreSamples.Messaging.Lib.Services
                 .WithAutomaticReconnect()
                 .Build();
 
-            RetryPolicy = Policy
-                .Handle<Exception>()
-                .WaitAndRetryAsync(
-                    Options.OnConnectionFailRetryCount,
-                    retryAttempt => TimeSpan.FromSeconds(Options.RetrySleepDurationInSeconds),
-                    (exception, timeSpan, retryCount, context) =>
-                    {
-                        Log.Logger.Warning($"Connection attempt {retryCount} failed. Retrying in {timeSpan.TotalSeconds} seconds: {exception.Message}");
-                    });
+            Connection.Closed += async (ex) =>
+            {
+                Log.Logger.Warning($"Connection closed: {ex?.Message}");
+                await Connection.StartAsync();
+            };
+
+            Connection.Reconnecting += (ex) =>
+            {
+                Log.Logger.Warning($"Reconnecting: {ex?.Message}");
+                return Task.CompletedTask;
+            };
+
+            Connection.Reconnected += (connectionId) =>
+            {
+                Log.Logger.Information($"Reconnected to the hub. Connection ID: {connectionId}");
+                return Task.CompletedTask;
+            };
+
+            RetryPolicy = RetryPolicies.DefaultAsyncExceptionRetryPolicy<Exception>(Options.RetrySleepDurationInSeconds, Options.OnConnectionFailRetryCount);
         }
 
         /// <inheritdoc/>
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            await RetryPolicy.ExecuteAsync(async () =>
-            {
-                await Connection.StartAsync(cancellationToken);
-                Log.Logger.Information("Connected to the hub successfully.");
-            });
+            await TryStartConnection();
         }
 
         /// <inheritdoc/>
         public async Task StopAsync(CancellationToken cancellationToken)
         {
             await Connection.StopAsync();
+        }
+
+        async Task TryStartConnection()
+        {
+            await RetryPolicy.ExecuteAsync(async () =>
+            {
+                try
+                {
+                    await Connection.StartAsync();
+
+                    Log.Logger.Information("Connected to the hub successfully.");
+                }
+                catch (Exception ex)
+                {
+                    Log.Logger.Error($"Failed to connect to the hub", ex);
+                    throw;
+                }
+            });
         }
     }
 }

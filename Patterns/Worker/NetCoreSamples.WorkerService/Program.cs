@@ -1,26 +1,26 @@
-using NetCoreSamples.Logging.Lib;
 using NetCoreSamples.Worker.Lib;
-using NetCoreSamples.Worker.Lib.Extensions;
+using NetCoreSamples.Worker.SampleWorkers.One;
+using NetCoreSamples.Worker.SampleWorkers.Two;
+using System.Reflection;
 
 namespace NetCoreSamples.WorkerService
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
-            var builder = Host.CreateApplicationBuilder(args);
+            var builder = WorkerApplication.CreateServiceBuilder<WorkerOptions>(args)
+                .WithAssembly(Assembly.Load("NetCoreSamples.Worker.SampleWorkers"))
+                .UseSerilog();
 
-            builder.Configuration
-                .AddCommandLine(args, WorkerApplication.BuildSwitchMap<WorkerOptions>());
+            builder.ConfigureWorker("WorkerOne", (services, configuration) =>
+                services.Configure<WorkerOneOptions>(configuration.GetSection(nameof(WorkerOneOptions))));
 
-            SerilogSetup.ConfigureSerilog(builder.Configuration);
+            builder.ConfigureWorker("WorkerTwo", (services, configuration) =>
+                services.Configure<WorkerTwoOptions>(configuration.GetSection(nameof(WorkerTwoOptions))));
 
-            builder.ConfigureWorkers();
-
-            builder.Services.AddHostedService<ServiceWorker>();
-
-            var host = builder.Build();
-            host.Run();
+            var app = builder.Build();
+            await app.Run();
         }
     }
 }

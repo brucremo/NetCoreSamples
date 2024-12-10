@@ -1,9 +1,8 @@
-﻿using Microsoft.Extensions.Configuration;
-using NetCoreSamples.Logging.Lib;
-using NetCoreSamples.Worker.Lib;
-using Serilog;
+﻿using NetCoreSamples.Worker.Lib;
 using System.Reflection;
-using NetCoreSamples.Worker.Lib.Extensions;
+using Microsoft.Extensions.DependencyInjection;
+using NetCoreSamples.Worker.SampleWorkers.One;
+using NetCoreSamples.Worker.SampleWorkers.Two;
 
 namespace NetCoreSamples.Worker
 {
@@ -11,37 +10,18 @@ namespace NetCoreSamples.Worker
     {
         public static async Task Main(string[] args)
         {
-            var builder = WorkerApplication.CreateBuilder(args);
+            var builder = WorkerApplication.CreateBuilder<WorkerOptions>(args)
+                .WithAssembly(Assembly.Load("NetCoreSamples.Worker.SampleWorkers"))
+                .UseSerilog();
 
-            builder.Assembly = Assembly.Load("NetCoreSamples.Worker.Lib");
+            builder.ConfigureWorker("WorkerOne", (services, configuration) => 
+                services.Configure<WorkerOneOptions>(configuration.GetSection(nameof(WorkerOneOptions))));
 
-            builder.Configuration
-                .AddJsonFile($"{AppDomain.CurrentDomain.BaseDirectory}appsettings.json");
+            builder.ConfigureWorker("WorkerTwo", (services, configuration) => 
+                services.Configure<WorkerTwoOptions>(configuration.GetSection(nameof(WorkerTwoOptions))));
 
-            // Configure workers with extension on separate file
-            builder.ConfigureWorkers();
-
-            SerilogSetup.ConfigureSerilog(builder.Configuration);
-
-            // Run the worker
-            try
-            {
-                Log.Logger.Information($"Starting @ UTC {DateTime.UtcNow}");
-
-                var app = builder.BuildWithNamedWorkers();
-
-                await app.Run();
-
-                Log.Logger.Information($"Finished @ UTC {DateTime.UtcNow}");
-            }
-            catch (Exception ex)
-            {
-                Log.Logger.Error($"Error: {ex.Message}");
-                Log.Logger.Error($"Trace: {ex.StackTrace}");
-                Log.Logger.Information($"Finished @ UTC {DateTime.UtcNow}");
-
-                throw;
-            }
+            var app = builder.Build();
+            await app.Run();
         }
     }
 }

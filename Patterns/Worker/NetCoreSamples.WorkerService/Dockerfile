@@ -3,6 +3,13 @@
 FROM mcr.microsoft.com/dotnet/runtime:9.0 AS base
 
 ENV WorkerOptions__Name=WorkerTwo
+ENV WorkerOptions__ServiceDelayInSeconds=2
+
+ENV WorkerTwoOptions__TextToLog="I'm WorkerTwo"
+
+ENV Serilog__MinimumLevel__Default=Debug
+ENV Serilog__WriteTo__0__Name=Console
+ENV Serilog__Using__0=Serilog.Sinks.Console
 
 USER app
 WORKDIR /app

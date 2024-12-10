@@ -22,10 +22,11 @@ namespace NetCoreSamples.Messaging.SignalR
             {
                 app.MapOpenApi();
             }
-
-            app.UseHttpsRedirection();
-
-            app.UseAuthorization();
+            else
+            {
+                app.UseHttpsRedirection();
+                app.UseAuthorization();
+            }
 
             app.MapHub<TaskHub>("/tasks");
 

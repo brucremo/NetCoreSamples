@@ -2,6 +2,9 @@
 
 namespace NetCoreSamples.Messaging.Lib.Hubs.Interfaces
 {
+    /// <summary>
+    /// Interface for the TaskHub
+    /// </summary>
     public interface ITaskHub
     {
         /// <summary>
@@ -12,10 +15,10 @@ namespace NetCoreSamples.Messaging.Lib.Hubs.Interfaces
         Task TaskCompleted(TaskCompletedContract contract);
 
         /// <summary>
-        /// Broadcasts a task started message to the requestor
+        /// Broadcasts a task requested message to all clients
         /// </summary>
-        /// <param name="contract">The <see cref="TaskCompletedContract"/></param>
+        /// <param name="contract">The <see cref="TaskRequestedContract"/></param>
         /// <returns></returns>
-        Task TaskStarted(TaskStartedContract contract);
+        Task TaskRequested(TaskRequestedContract contract);
     }
 }

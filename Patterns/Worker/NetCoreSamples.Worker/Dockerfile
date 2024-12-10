@@ -4,6 +4,12 @@ FROM mcr.microsoft.com/dotnet/runtime:9.0 AS base
 
 ENV WorkerOptions__Name=WorkerOne
 
+ENV WorkerOneOptions__TextToLog="I'm WorkerOne"
+
+ENV Serilog__MinimumLevel__Default=Debug
+ENV Serilog__WriteTo__0__Name=Console
+ENV Serilog__Using__0=Serilog.Sinks.Console
+
 USER app
 WORKDIR /app
 

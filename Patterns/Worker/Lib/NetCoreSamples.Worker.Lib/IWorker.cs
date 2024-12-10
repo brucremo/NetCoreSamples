@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-
-namespace NetCoreSamples.Worker.Lib
+﻿namespace NetCoreSamples.Worker.Lib
 {
     /// <summary>
     /// The basic interface for a Worker
@@ -8,10 +6,10 @@ namespace NetCoreSamples.Worker.Lib
     public interface IWorker
     {
         /// <summary>
-        /// Runs the Worker implementation tasks
+        /// Runs the Worker implementation
         /// </summary>
-        /// <param name="configuration">The configuration</param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task Run(IConfiguration? configuration = null);
+        Task Run(CancellationToken? cancellationToken = null);
     }
 }

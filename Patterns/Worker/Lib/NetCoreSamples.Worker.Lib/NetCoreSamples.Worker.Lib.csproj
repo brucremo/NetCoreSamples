@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <InternalsVisibleTo Include="NetCoreSamples.Worker.Lib.Tests" />
     <ProjectReference Include="..\..\..\..\Shared\NetCoreSamples.Logging.Lib\NetCoreSamples.Logging.Lib.csproj" />
   </ItemGroup>
 

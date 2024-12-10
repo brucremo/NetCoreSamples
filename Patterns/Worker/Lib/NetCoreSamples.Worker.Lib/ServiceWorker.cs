@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Hosting;
-using Serilog;
 
 namespace NetCoreSamples.Worker.Lib
 {
@@ -11,34 +10,21 @@ namespace NetCoreSamples.Worker.Lib
         /// <summary>
         /// The Worker instance
         /// </summary>
-        private IWorker Worker;
+        readonly IWorker Worker;
 
         public ServiceWorker(IWorker worker)
         {
-            this.Worker = worker;
+            Worker = worker;
         }
 
-        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+        /// <summary>
+        /// Executes the configured <see cref="IWorker"/> implementation as a background service
+        /// </summary>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/></param>
+        /// <returns></returns>
+        protected override async Task ExecuteAsync(CancellationToken cancellationToken)
         {
-            while (!stoppingToken.IsCancellationRequested)
-            {
-                try
-                {
-                    Log.Logger.Information($"Starting @ UTC {DateTime.UtcNow}");
-
-                    await this.Worker.Run();
-
-                    Log.Logger.Information($"Finished @ UTC {DateTime.UtcNow}");
-                }
-                catch (Exception ex)
-                {
-                    Log.Logger.Error($"Error: {ex.Message}");
-                    Log.Logger.Error($"Trace: {ex.StackTrace}");
-                    Log.Logger.Information($"Finished @ UTC {DateTime.UtcNow}");
-
-                    throw;
-                }
-            }
+            await Worker.Run(cancellationToken);
         }
     }
 }

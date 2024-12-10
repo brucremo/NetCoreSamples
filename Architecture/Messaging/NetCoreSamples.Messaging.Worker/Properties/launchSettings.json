@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "NetCoreSamples.Messaging.Worker": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}

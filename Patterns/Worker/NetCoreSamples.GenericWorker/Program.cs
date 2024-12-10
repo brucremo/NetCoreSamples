@@ -12,7 +12,7 @@ namespace NetCoreSamples.GenericWorker
     {
         public static async Task Main(string[] args)
         {
-            switch (Environment.GetEnvironmentVariable("WORKER_MODE")?.ToLower() ?? throw new InvalidOperationException("No value found for WORKER_MODE"))
+            switch (GetWorkerModeOption(args))
             {
                 case "worker":
                     await StartAdHocWorker(args);
@@ -92,7 +92,7 @@ namespace NetCoreSamples.GenericWorker
             {
                 Log.Logger.Information($"Starting @ UTC {DateTime.UtcNow}");
 
-                await builder.BuildGeneric().Run(builder.Configuration);
+                await builder.BuildGeneric().Run();
 
                 Log.Logger.Information($"Finished @ UTC {DateTime.UtcNow}");
             }
@@ -105,5 +105,7 @@ namespace NetCoreSamples.GenericWorker
                 throw;
             }
         }
+    
+        static string GetWorkerModeOption(string[] args) => args.FirstOrDefault()?.ToLower() ?? Environment.GetEnvironmentVariable("WORKER_MODE")?.ToLower() ?? throw new InvalidOperationException("No value found for WORKER_MODE");
     }
 }
