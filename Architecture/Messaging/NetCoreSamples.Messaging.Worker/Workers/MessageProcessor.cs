@@ -7,8 +7,14 @@ using Serilog;
 
 namespace NetCoreSamples.Messaging.Worker
 {
+    /// <summary>
+    /// A Worker that processes messages received from the MessageHub
+    /// </summary>
     public class MessageProcessor : IWorker
     {
+        /// <summary>
+        /// The message hub client service
+        /// </summary>
         readonly IMessageHubClientService messageHubClient;
 
         public MessageProcessor(IMessageHubClientService messageHubClientService)

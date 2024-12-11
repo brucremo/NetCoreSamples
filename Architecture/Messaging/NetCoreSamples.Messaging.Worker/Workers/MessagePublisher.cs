@@ -8,11 +8,18 @@ using Serilog;
 namespace NetCoreSamples.Messaging.Worker
 {
     /// <summary>
-    /// Worker that publishes messages to the message hub
+    /// Worker that publishes messages to the message hub and processes the task confirmation messages received back from the MessageHub
     /// </summary>
     public class MessagePublisher : IWorker
     {
+        /// <summary>
+        /// The message hub client service
+        /// </summary>
         readonly IMessageHubClientService messageHubClient;
+
+        /// <summary>
+        /// The unpublished task started contracts
+        /// </summary>
         readonly Dictionary<Guid, TaskRequestedContract> unpublishedTaskStartedContracts = new();
 
         public MessagePublisher(IMessageHubClientService messageHubClientService)

@@ -20,7 +20,7 @@ namespace NetCoreSamples.Worker.Lib.Tests
             await workerApplication.Run();
 
             // Assert
-            mockWorker.Verify(w => w.Run(), Times.Once);
+            mockWorker.Verify(w => w.Run(It.IsAny<CancellationToken?>()), Times.Once);
         }
 
         [Fact]
@@ -44,7 +44,7 @@ namespace NetCoreSamples.Worker.Lib.Tests
             var expected = new Exception("Test exception");
             var mockWorker = new Mock<IWorker>();
             mockWorker
-                .Setup(w => w.Run())
+                .Setup(w => w.Run(It.IsAny<CancellationToken?>()))
                 .Throws(expected);
             var mockServiceProvider = new Mock<IServiceProvider>();
             mockServiceProvider

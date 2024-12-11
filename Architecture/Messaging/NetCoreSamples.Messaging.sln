@@ -15,8 +15,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCoreSamples.Messaging.Li
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCoreSamples.Worker.Lib", "..\..\Patterns\Worker\Lib\NetCoreSamples.Worker.Lib\NetCoreSamples.Worker.Lib.csproj", "{B1B563E2-B2C4-4E93-9B8E-C3B508F946EB}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{58534DCF-48A3-4515-A530-135CC8A32BF9}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCoreSamples.Messaging.Worker", "NetCoreSamples.Messaging.Worker\NetCoreSamples.Messaging.Worker.csproj", "{33A85D18-DAEB-4D2D-A7EE-3464696838B9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCoreSamples.DependencyInjection.Lib", "..\..\Shared\NetCoreSamples.DependencyInjection.Lib\NetCoreSamples.DependencyInjection.Lib.csproj", "{C20F06A0-B06E-47D0-A6DD-2AF8FA12D6F0}"

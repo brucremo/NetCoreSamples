@@ -3,6 +3,9 @@ using Microsoft.Extensions.Hosting;
 
 namespace NetCoreSamples.Messaging.Lib.Services
 {
+    /// <summary>
+    /// A Service for managing SignalR Hub connections
+    /// </summary>
     public interface IMessageHubClientService : IHostedService
     {
         /// <summary>
