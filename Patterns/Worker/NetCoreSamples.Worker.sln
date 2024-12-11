@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCoreSamples.Logging.Lib"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCoreSamples.Worker.SampleWorkers", "NetCoreSamples.Worker.SampleWorkers\NetCoreSamples.Worker.SampleWorkers.csproj", "{D0C33692-D35B-4A00-9139-4ED20D149B1E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{7A4126F8-90EB-4C03-BEED-EABAA6D8D1A1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,7 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{29EF6EDB-7B12-44A8-8B42-4C03F49A9698} = {87819F88-A3A4-4480-8F3D-7A2667F47F46}
+		{306494C1-B964-4482-9D3E-DDC654A87F80} = {7A4126F8-90EB-4C03-BEED-EABAA6D8D1A1}
 		{EAA89580-2FD8-4CA9-A173-DB3553C3803E} = {87819F88-A3A4-4480-8F3D-7A2667F47F46}
 		{D0C33692-D35B-4A00-9139-4ED20D149B1E} = {87819F88-A3A4-4480-8F3D-7A2667F47F46}
 	EndGlobalSection

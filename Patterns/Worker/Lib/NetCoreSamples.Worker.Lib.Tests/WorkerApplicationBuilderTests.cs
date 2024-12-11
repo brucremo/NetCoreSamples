@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Moq;
+using System.Reflection;
 using Xunit;
 
 namespace NetCoreSamples.Worker.Lib.Tests
@@ -71,5 +73,45 @@ namespace NetCoreSamples.Worker.Lib.Tests
             Assert.IsType(exceptionType, exception);
         }
 
+        [Fact]
+        public void WithAssembly_SetsAssemblyProperty()
+        {
+            // Arrange
+            var assembly = Assembly.GetExecutingAssembly();
+
+            // Act
+            builder.WithAssembly(assembly);
+
+            // Assert
+            Assert.Equal(assembly, builder.Assembly);
+        }
+
+        [Fact]
+        public void WithCallingAssembly_SetsAssemblyProperty()
+        {
+            // Act
+            builder.WithCallingAssembly();
+
+            // Assert
+            Assert.Equal(GetType().Assembly, builder.Assembly);
+        }
+
+        [Fact]
+        public void UseConfiguredWorkerType_RegistersCorrectWorkerType()
+        {
+            // Arrange
+            var workerTypeName = "MockWorker";
+            builder.WithCallingAssembly();
+
+            // Act
+            builder.UseConfiguredWorkerType(workerTypeName);
+            builder.ConfigureWorker(validWorkerName, (services, configuration) => { });
+            var application = builder.Build();
+
+            // Assert
+            var service = builder.Services.BuildServiceProvider().GetService<IWorker>();
+            Assert.NotNull(service);
+            Assert.Equal(workerTypeName, service.GetType().Name);
+        }
     }
 }

@@ -31,7 +31,7 @@ namespace NetCoreSamples.Worker.Lib
             }
         }
 
-        private IServiceCollection _services = new ServiceCollection();
+        IServiceCollection _services = new ServiceCollection();
 
         /// <summary>
         /// Assembly where the Workers are located. Defaults to the EntryAssembly
@@ -39,26 +39,19 @@ namespace NetCoreSamples.Worker.Lib
         public Assembly? Assembly { get; private set; }
 
         /// <summary>
-        /// The available Worker implementations in the configured Assembly
-        /// </summary>
-        public List<Type> AvailableWorkerImplementations => Assembly?.GetTypes()
-            .Where(a => a.GetInterfaces().Contains(typeof(IWorker)))
-            .ToList() ?? throw new InvalidOperationException("No Assembly was set for this WorkerApplicationBuilder!");
-
-        /// <summary>
         /// The Worker type to be used
         /// </summary>
-        private Type? WorkerType { get; set; }
+        Type? WorkerType { get; set; }
 
         /// <summary>
         /// A dictionary of Worker configurations that can be invoked by the --worker CLI parameter
         /// </summary>
-        private Dictionary<string, Action<IServiceCollection, IConfiguration>?> WorkerConfigurations { get; set; } = new();
+        Dictionary<string, Action<IServiceCollection, IConfiguration>?> WorkerConfigurations { get; set; } = new();
 
         /// <summary>
         /// The <see cref="HostApplicationBuilder"/> to be used for a service-based worker application
         /// </summary>
-        private HostApplicationBuilder? HostApplicationBuilder { get; set; }
+        HostApplicationBuilder? HostApplicationBuilder { get; set; }
 
         internal WorkerApplicationBuilder()
         {
@@ -116,18 +109,6 @@ namespace NetCoreSamples.Worker.Lib
         /// <summary>
         /// Sets the Worker assembly where the <see cref="IWorker"/> implementations exist to be used by the <see cref="WorkerApplicationBuilder"/>
         /// </summary>
-        /// <param name="configurationKeyValue">The configuration name with the assembly to be used</param>
-        /// <returns>The builder instance</returns>
-        public WorkerApplicationBuilder WithConfiguredAssembly(string configurationKeyValue)
-        {
-            Assembly = Assembly.Load(
-                Configuration.GetValue<string>(configurationKeyValue) ?? throw new InvalidOperationException($"There's no value configured for {configurationKeyValue}"));
-            return this;
-        }
-
-        /// <summary>
-        /// Sets the Worker assembly where the <see cref="IWorker"/> implementations exist to be used by the <see cref="WorkerApplicationBuilder"/>
-        /// </summary>
         /// <param name="assembly">The assembly to be used</param>
         /// <returns>The builder instance</returns>
         public WorkerApplicationBuilder WithAssembly(Assembly assembly)
@@ -172,7 +153,7 @@ namespace NetCoreSamples.Worker.Lib
         /// </summary>
         /// <param name="workerName">The Worker class name</param>
         /// <returns>The worker <see cref="Type"/></returns>
-        private Type? GetWorkerTypeByName(string workerName)
+        Type? GetWorkerTypeByName(string workerName)
         {
             if (Assembly == null)
             {

@@ -13,12 +13,12 @@ namespace NetCoreSamples.Worker.Lib
         /// <summary>
         /// The Service Provider
         /// </summary>
-        private IServiceProvider ServiceProvider { get; set; }
+        IServiceProvider ServiceProvider { get; set; }
 
         /// <summary>
         /// The Host instance used for service-based worker applications
         /// </summary>
-        private IHost? HostApp { get; set; }
+        IHost? HostApp { get; set; }
 
         internal WorkerApplication(IServiceProvider serviceProvider)
         {
@@ -81,18 +81,6 @@ namespace NetCoreSamples.Worker.Lib
         }
 
         /// <summary>
-        /// Builds SwitchMap support for CLI parameters
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public static Dictionary<string, string> BuildSwitchMap<T>()
-        {
-            return typeof(T)
-                .GetProperties()
-                .ToDictionary(a => $"--{a.Name}", b => $"{typeof(T).Name}:{b.Name}");
-        }
-
-        /// <summary>
         /// Runs the Worker Application
         /// </summary>
         /// <returns></returns>
@@ -121,6 +109,18 @@ namespace NetCoreSamples.Worker.Lib
 
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Builds SwitchMap support for CLI parameters
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        static Dictionary<string, string> BuildSwitchMap<T>()
+        {
+            return typeof(T)
+                .GetProperties()
+                .ToDictionary(a => $"--{a.Name}", b => $"{typeof(T).Name}:{b.Name}");
         }
     }
 }
