@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 namespace NetCoreSamples.DependencyInjection.Lib.Extensions
@@ -20,6 +21,20 @@ namespace NetCoreSamples.DependencyInjection.Lib.Extensions
         {
             services.AddSingleton<TService, TImplementation>();
             services.AddHostedService(p => p.GetRequiredService<TService>());
+        }
+
+        /// <summary>
+        /// Configures a service with a configuration section using the type name as the section name.
+        /// </summary>
+        /// <typeparam name="T">The type to be configured</typeparam>
+        /// <param name="services">The <see cref="IServiceCollection"/></param>
+        /// <param name="configuration">The <see cref="IConfiguration"/></param>
+        /// <returns>The <see cref="IServiceCollection"/></returns>
+        public static IServiceCollection ConfigureOptionsType<T>(this IServiceCollection services, IConfiguration configuration)
+            where T : class
+        {
+            services.Configure<T>(configuration.GetSection(typeof(T).Name));
+            return services;
         }
     }
 }

@@ -1,8 +1,8 @@
 version: '3.4'
  
-x-common-variables: &common-variables
+x-worker-variables: &worker-variables
     WORKER_MODE: service
-    MessageHubClientOptions__EndpointUrl: "http://host.docker.internal:8080"
+    MessageHubClientOptions__EndpointUrl: "http://host.docker.internal:8080" # Windows only!
     MessageHubClientOptions__DefaultHub: "tasks"
 
 services:
@@ -32,7 +32,7 @@ services:
       context: .
       dockerfile: NetCoreSamples.Messaging.Worker/Dockerfile
     environment:
-      <<: *common-variables
+      <<: *worker-variables
       WorkerOptions__Name: MessageProcessor
     depends_on: 
       - netcoresamples.messaging.signalr
@@ -45,7 +45,7 @@ services:
       context: .
       dockerfile: NetCoreSamples.Messaging.Worker/Dockerfile
     environment:
-      <<: *common-variables
+      <<: *worker-variables
       WorkerOptions__Name: MessagePublisher
     depends_on: 
       - netcoresamples.messaging.signalr

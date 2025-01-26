@@ -27,7 +27,7 @@ namespace NetCoreSamples.Messaging.Worker
         {
             return (services, configuration) =>
             {
-                services.Configure<MessageHubClientOptions>(configuration.GetSection(nameof(MessageHubClientOptions)));
+                services.ConfigureOptionsType<MessageHubClientOptions>(configuration);
                 services.AddSingleton<IHostEnvironment, HostingEnvironment>();
                 services.AddInterfaceHostedService<IMessageHubClientService, MessageHubClientService>();
             };

@@ -1,4 +1,6 @@
-﻿namespace NetCoreSamples.Messaging.Lib.Contracts
+﻿using NetCoreSamples.Serialization.Lib;
+
+namespace NetCoreSamples.Messaging.Lib.Contracts
 {
     /// <summary>
     /// The base contract
@@ -15,13 +17,10 @@
         /// </summary>
         public required Guid TaskId { get; set; }
 
-        /// <summary>
-        /// Gets the contract data for storage.
-        /// </summary>
-        /// <returns>The contract</returns>
-        public Task<T?> GetContract()
+        /// <inheritdoc/>
+        public override string ToString()
         {
-            return Task.FromResult(this as T);
+            return Serializer.SerializeJson(this as T);
         }
     }
 }

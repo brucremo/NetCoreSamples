@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Shared\NetCoreSamples.Logging.Lib\NetCoreSamples.Logging.Lib.csproj" />
+    <ProjectReference Include="..\..\..\Shared\NetCoreSamples.Serialization.Lib\NetCoreSamples.Serialization.Lib.csproj" />
   </ItemGroup>
 
 </Project>
