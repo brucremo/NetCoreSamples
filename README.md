@@ -20,28 +20,33 @@ dotnet build NetCoreSamples.sln
 ## Project Structure
 
 - **Architecture**: Contains different architectural patterns and services.
+  - **Broker**: Broker services and related libraries using NATS as a broker.
   - **Caching**: Caching related services and configurations.
-  - **MetricsCollection**: Services related to metrics collection.
-  - **Queueing**: Queueing related services.
-  - **Sharding**: Sharding related services.
-  - **Vault**: Vault related services and configurations.
-- **Database**: Database related projects and scripts.
+  - **Messaging**: Simple messaging services and related libraries using SignalR for live communication between applications. 
+- **Database**: Database related projects and scripts for MSSQL.
 - **Patterns**: Contains different design patterns and services.
 - **Shared**: Shared libraries and domain models.
 
 ## Projects
 
+### Broker
+
+- **NetCoreSamples.Broker.Consumer**: Consumer application for broker messages.
+- **NetCoreSamples.Broker.Publisher**: Publisher application for broker messages.
+- **NetCoreSamples.Broker.Lib**: Library for broker services.
+
 ### Caching
 
 - **NetCoreSamples.Caching.Client**: Client application for caching.
 - **NetCoreSamples.Caching.Application**: Application layer for caching.
-- **NetCoreSamples.Caching.Lib**: Library for caching.
+- **NetCoreSamples.Caching.Lib**: Library for caching services.
 - **NetCoreSamples.Caching.Persistence**: Persistence layer for caching.
 
-### Vault
+### Messaging
 
-- **NetCoreSamples.Vault.API**: API for Vault services.
-- **NetCoreSamples.Vault.Lib**: Library for Vault services.
+- **NetCoreSamples.Messaging.SignalR**: SignalR API for message transmission.
+- **NetCoreSamples.Messaging.Worker**: Worker application to produce/consume messages.
+- **NetCoreSamples.Messaging.Lib**: Library for messaging services.
 
 ### Database
 
