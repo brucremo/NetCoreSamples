@@ -5,26 +5,18 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <InvariantGlobalization>true</InvariantGlobalization>
-    <PublishAot>true</PublishAot>
-    <UserSecretsId>dotnet-NetCoreSamples.Worker-c1a842d0-b0f8-4f16-b48e-0c47cf0d2690</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Include="..\.dockerignore" Link=".dockerignore">
-      <DependentUpon>$(DockerDefaultDockerfile)</DependentUpon>
-    </None>
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.2" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Patterns\Worker\Lib\NetCoreSamples.Worker.Lib\NetCoreSamples.Worker.Lib.csproj" />
+    <ProjectReference Include="..\..\..\Shared\NetCoreSamples.DependencyInjection.Lib\NetCoreSamples.DependencyInjection.Lib.csproj" />
     <ProjectReference Include="..\..\..\Shared\NetCoreSamples.Logging.Lib\NetCoreSamples.Logging.Lib.csproj" />
-    <ProjectReference Include="..\Lib\NetCoreSamples.Worker.Lib\NetCoreSamples.Worker.Lib.csproj" />
-    <ProjectReference Include="..\NetCoreSamples.Worker.SampleWorkers\NetCoreSamples.Worker.SampleWorkers.csproj" />
+    <ProjectReference Include="..\NetCoreSamples.Broker.Lib\NetCoreSamples.Broker.Lib.csproj" />
   </ItemGroup>
 
 </Project>

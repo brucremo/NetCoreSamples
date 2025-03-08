@@ -1,0 +1,53 @@
+version: '3.4'
+ 
+x-worker-variables: &worker-variables
+    WORKER_MODE: service
+    BrokerServiceOptions__ServerUrl: "http://host.docker.internal:4222" # Windows only!
+    BrokerServiceOptions__Username: "testuser"
+    BrokerServiceOptions__Password: "password"
+
+services:
+  # NATS Node 
+  netcoresamples.broker.nats:
+    image: nats:latest
+    container_name: "NetCoreSamples.Broker.Nats"
+    ports:
+      - "4222:4222"
+      - "8222:8222"
+    volumes:
+      - nats-data:/data
+    command: >
+      -js
+      -name nats-node
+      -store_dir /data
+      --user testuser 
+      --pass password
+
+  # Worker 1 - Processor
+  netcoresamples.broker.processor.worker:
+    container_name: "NetCoreSamples.Broker.Processor.Worker"
+    image: ${DOCKER_REGISTRY-}netcoresamplesbrokerprocessorworker
+    build:
+      context: .
+      dockerfile: NetCoreSamples.Broker.Worker/Dockerfile
+    environment:
+      <<: *worker-variables
+      WorkerOptions__Name: Processor
+    depends_on: 
+      - netcoresamples.broker.nats
+
+  # Worker 2 - Publisher
+  netcoresamples.broker.publisher.worker:
+    container_name: "NetCoreSamples.Broker.Publisher.Worker"
+    image: ${DOCKER_REGISTRY-}netcoresamplesbrokerpublisherworker
+    build:
+      context: .
+      dockerfile: NetCoreSamples.Broker.Worker/Dockerfile
+    environment:
+      <<: *worker-variables
+      WorkerOptions__Name: Publisher
+    depends_on: 
+      - netcoresamples.broker.nats
+
+volumes:
+  nats-data:

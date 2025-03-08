@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "NetCoreSamples.Broker.Worker": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}
