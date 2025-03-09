@@ -13,17 +13,24 @@ namespace NetCoreSamples.Caching.Client.Controllers
     [Route("api/[controller]")]
     public class LocationController : Controller
     {
-        private IMediator Mediator { get; }
+        /// <summary>
+        /// The mediator for sending requests to the application layer.
+        /// </summary>
+        private IMediator mediator { get; }
 
         public LocationController(IMediator mediator)
         {
-            this.Mediator = mediator;
+            this.mediator = mediator;
         }
 
+        /// <summary>
+        /// Gets all countries and their states.
+        /// </summary>
+        /// <returns>A list of <see cref="LocationDTO"/></returns>
         [HttpGet("countrystates")]
         public async Task<IEnumerable<LocationDTO>> GetAllCountryStatesAsync()
         {
-            return await this.Mediator.Send(new GetLocation.AllCountryStates());
+            return await this.mediator.Send(new GetLocation.AllCountryStates());
         }
     }
 }

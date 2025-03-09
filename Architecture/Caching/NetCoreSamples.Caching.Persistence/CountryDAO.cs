@@ -5,18 +5,23 @@ using NetCoreSamples.Domain.Entities;
 
 namespace NetCoreSamples.Caching.Persistence
 {
+    /// <inheritdoc />
     public class CountryDAO : ICountryDAO
     {
-        private SampleDbContext Context { get; }
+        /// <summary>
+        /// The database context.
+        /// </summary>
+        readonly SampleDbContext context;
 
         public CountryDAO(SampleDbContext context)
         {
-            this.Context = context;
+            this.context = context;
         }
 
+        /// <inheritdoc />
         public async Task<IEnumerable<Country>> GetAllWithStatesAsync()
         {
-            return await this.Context.Countries
+            return await context.Countries
                 .Include(x => x.StateProvinces)
                 .ToListAsync();
         }

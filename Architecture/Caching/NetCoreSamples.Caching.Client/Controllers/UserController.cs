@@ -13,17 +13,24 @@ namespace NetCoreSamples.Caching.Client.Controllers
     [Route("api/[controller]")]
     public class UserController : Controller
     {
-        private IMediator Mediator { get; }
+        /// <summary>
+        /// The mediator for sending requests to the application layer.
+        /// </summary>
+        private IMediator mediator { get; }
 
         public UserController(IMediator mediator)
         {
-            this.Mediator = mediator;
+            this.mediator = mediator;
         }
 
+        /// <summary>
+        /// Gets all users.
+        /// </summary>
+        /// <returns>A list of <see cref="UserDTO"/></returns>
         [HttpGet("users")]
         public async Task<IEnumerable<UserDTO>> GetAllUsersAsync()
         {
-            return await this.Mediator.Send(new GetUser.All());
+            return await this.mediator.Send(new GetUser.All());
         }
     }
 }

@@ -6,6 +6,10 @@ WORKDIR /app
 EXPOSE 8080
 EXPOSE 8081
 
+ENV Serilog__MinimumLevel__Default=Debug
+ENV Serilog__WriteTo__0__Name=Console
+ENV Serilog__Using__0=Serilog.Sinks.Console
+
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src

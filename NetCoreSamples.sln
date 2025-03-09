@@ -63,6 +63,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCoreSamples.Broker.Worke
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCoreSamples.Broker.Lib", "Architecture\Broker\NetCoreSamples.Broker.Lib\NetCoreSamples.Broker.Lib.csproj", "{8C6E3862-14B3-1482-EE7A-551ABDF1D36E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EventSourcing", "EventSourcing", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -165,6 +167,7 @@ Global
 		{5CC1908D-7D1C-41F8-88A5-389AA97A9A87} = {F9601589-7973-4624-9066-BD620E673CF2}
 		{FF1652EA-2FE9-2AE3-06BB-DA9128488385} = {5CC1908D-7D1C-41F8-88A5-389AA97A9A87}
 		{8C6E3862-14B3-1482-EE7A-551ABDF1D36E} = {5CC1908D-7D1C-41F8-88A5-389AA97A9A87}
+		{02EA681E-C7D8-13C7-8484-4AC65E1B71E8} = {B9C2B992-7372-4655-9867-9196F1424097}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AB4E00F9-51F9-4158-BD32-A786C8DF9156}

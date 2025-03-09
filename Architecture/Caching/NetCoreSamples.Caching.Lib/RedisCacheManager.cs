@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Caching.Distributed;
-using Microsoft.Extensions.Logging;
+using Serilog;
 using System.Text;
 using System.Text.Json;
 
@@ -10,13 +10,11 @@ namespace NetCoreSamples.Caching.Lib
     /// </summary>
     public class RedisCacheManager
     {
-        private IDistributedCache Cache { get; }
-        private ILogger<RedisCacheManager> Logger { get; }
+        private IDistributedCache cache { get; }
 
-        public RedisCacheManager(IDistributedCache cache, ILogger<RedisCacheManager> logger)
+        public RedisCacheManager(IDistributedCache cache)
         {
-            this.Cache = cache;
-            this.Logger = logger;
+            this.cache = cache;
         }
 
         /// <summary>
@@ -24,18 +22,18 @@ namespace NetCoreSamples.Caching.Lib
         /// </summary>
         /// <param name="key">The cache key</param>
         /// <param name="dataObject">The data object</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the async operation</returns>
         public async Task SetSerializableDataAsync(string key, object dataObject)
         {
             try
             {
                 var serializedData = JsonSerializer.Serialize(dataObject);
 
-                await this.Cache.SetAsync(key, Encoding.UTF8.GetBytes(serializedData));
+                await this.cache.SetAsync(key, Encoding.UTF8.GetBytes(serializedData));
             }
             catch (Exception ex)
             {
-                this.Logger.LogWarning($"{ex.Message} | {ex.StackTrace}");
+                Log.Warning($"{ex.Message} | {ex.StackTrace}");
             }
         }
 
@@ -44,12 +42,12 @@ namespace NetCoreSamples.Caching.Lib
         /// </summary>
         /// <typeparam name="T">The data type</typeparam>
         /// <param name="key">The cache key</param>
-        /// <returns></returns>
+        /// <returns>The <typeparamref name="T"/> data.</returns>
         public async Task<T?> GetSerializableDataAsync<T>(string key) where T : class
         {
             try
             {
-                if (await this.Cache.GetAsync(key) is byte[] cachedData)
+                if (await this.cache.GetAsync(key) is byte[] cachedData)
                 {
                     var serializedData = Encoding.UTF8.GetString(cachedData);
 
@@ -60,7 +58,7 @@ namespace NetCoreSamples.Caching.Lib
             } 
             catch (Exception ex)
             {
-                this.Logger.LogWarning($"{ex.Message} | {ex.StackTrace}");
+                Log.Warning($"{ex.Message} | {ex.StackTrace}");
                 return null;
             }
         }

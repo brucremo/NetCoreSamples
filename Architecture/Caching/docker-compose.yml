@@ -6,92 +6,25 @@ services:
     build:
       context: .
       dockerfile: NetCoreSamples.Caching.Client/Dockerfile
-
-  # Redis Cluster Setup
-  # Node 0
-  redis-node-0:
-    image: docker.io/bitnami/redis-cluster:7.2
-    volumes:
-      - redis-cluster_data-0:/bitnami/redis/data
     environment:
-      - 'REDIS_PASSWORD=redis'
-      - 'REDIS_NODES=redis-node-0 redis-node-1 redis-node-2 redis-node-3 redis-node-4 redis-cluster-master'
-      
-  # Node 1
-  redis-node-1:
-    image: docker.io/bitnami/redis-cluster:7.2
+      ASPNETCORE_ENVIRONMENT: "Development"
+      AllowedHosts: "*"
+      ConnectionStrings__DefaultConnection: "Data Source=host.docker.internal;Initial Catalog=NetCoreSamples.Database;TrustServerCertificate=true;User ID=sa;Password=P@ssw0rd"
+      Redis__Endpoints__0__Host: "netcoresamples.caching.redis"
+      Redis__Endpoints__0__Port: "6379"
+      Redis__InstanceName: "WebClient"
+      Redis__Password: "redis"
+      Redis__Timeout: "300"
+     
+  # Redis Node
+  netcoresamples.caching.redis:
+    container_name: netcoresamples.caching.redis
+    image: redis:latest
     volumes:
-      - redis-cluster_data-1:/bitnami/redis/data
+      - redis_data:/data
     environment:
-      - 'REDIS_PASSWORD=redis'
-      - 'REDIS_NODES=redis-node-0 redis-node-1 redis-node-2 redis-node-3 redis-node-4 redis-cluster-master'
-      
-  # Node 2
-  redis-node-2:
-    image: docker.io/bitnami/redis-cluster:7.2
-    volumes:
-      - redis-cluster_data-2:/bitnami/redis/data
-    environment:
-      - 'REDIS_PASSWORD=redis'
-      - 'REDIS_NODES=redis-node-0 redis-node-1 redis-node-2 redis-node-3 redis-node-4 redis-cluster-master'
-      
-  # Node 3
-  redis-node-3:
-    image: docker.io/bitnami/redis-cluster:7.2
-    volumes:
-      - redis-cluster_data-3:/bitnami/redis/data
-    environment:
-      - 'REDIS_PASSWORD=redis'
-      - 'REDIS_NODES=redis-node-0 redis-node-1 redis-node-2 redis-node-3 redis-node-4 redis-cluster-master'
-
-  # Node 4
-  redis-node-4:
-    image: docker.io/bitnami/redis-cluster:7.2
-    volumes:
-      - redis-cluster_data-4:/bitnami/redis/data
-    environment:
-      - 'REDIS_PASSWORD=redis'
-      - 'REDIS_NODES=redis-node-0 redis-node-1 redis-node-2 redis-node-3 redis-node-4 redis-cluster-master'
-      
-  # Redis Cluster - Replica
-  # Node 5
-  redis-cluster-master:
-    image: docker.io/bitnami/redis-cluster:7.2
-    volumes:
-      - redis-cluster_data-5:/bitnami/redis/data
-    depends_on:
-      - redis-node-0
-      - redis-node-1
-      - redis-node-2
-      - redis-node-3
-      - redis-node-4
-    environment:
-      - 'REDIS_PASSWORD=redis'
-      - 'REDISCLI_AUTH=redis'
-      - 'REDIS_CLUSTER_REPLICAS=1'
-      - 'REDIS_NODES=redis-node-0 redis-node-1 redis-node-2 redis-node-3 redis-node-4 redis-cluster-master'
-      - 'REDIS_CLUSTER_CREATOR=yes'
+      REDIS_PASSWORD: "redis"
       
 volumes:
-    netcoresamples.db:
-        name: netcoresamples.db
-        external: false
-    redis-cluster_data-0:
-        name: redis-cluster_data-0
-        driver: local
-    redis-cluster_data-1:
-        name: redis-cluster_data-1
-        driver: local
-    redis-cluster_data-2:
-        name: redis-cluster_data-2
-        driver: local
-    redis-cluster_data-3:
-        name: redis-cluster_data-3
-        driver: local
-    redis-cluster_data-4:
-        name: redis-cluster_data-4
-        driver: local
-    redis-cluster_data-5:
-        name: redis-cluster_data-5
-        driver: local
-  
+  redis_data:
+    name: redis_data

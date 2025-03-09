@@ -5,7 +5,6 @@ using NetCoreSamples.Domain;
 using NetCoreSamples.Caching.Application.Features.Location.Handlers;
 using NetCoreSamples.Caching.Application.Interfaces;
 using NetCoreSamples.Caching.Persistence;
-using System.Linq;
 
 namespace NetCoreSamples.Caching.Client
 {
@@ -21,15 +20,12 @@ namespace NetCoreSamples.Caching.Client
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            // MediatR setup
             builder.Services.AddMediatR(cfg => {
                 cfg.RegisterServicesFromAssembly(typeof(GetLocationHandlers).Assembly);
             });
 
-            // Configure Redis access
             builder.ConfigureRedis();
 
-            // DbContext injection
             var connectionString = builder.Configuration
                 .GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
@@ -51,7 +47,6 @@ namespace NetCoreSamples.Caching.Client
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 
