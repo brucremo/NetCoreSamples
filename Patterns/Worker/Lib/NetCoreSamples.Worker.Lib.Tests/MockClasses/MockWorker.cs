@@ -2,7 +2,7 @@
 {
     internal class MockWorker : IWorker
     {
-        public Task Run(CancellationToken? cancellationToken = null)
+        public Task Run(CancellationToken cancellationToken = default)
         {
             return Task.CompletedTask;
         }

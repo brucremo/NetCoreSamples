@@ -10,6 +10,6 @@
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task Run(CancellationToken? cancellationToken = null);
+        Task Run(CancellationToken cancellationToken = default);
     }
 }

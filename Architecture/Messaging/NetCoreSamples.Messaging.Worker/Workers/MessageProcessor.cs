@@ -23,12 +23,12 @@ namespace NetCoreSamples.Messaging.Worker
         }
 
         /// <inheritdoc/>
-        public async Task Run(CancellationToken? cancellationToken = null)
+        public async Task Run(CancellationToken cancellationToken = default)
         {
             await SetupHubConnection();
 
             // Keep the connection alive until cancellation is requested
-            while (!cancellationToken.GetValueOrDefault().IsCancellationRequested)
+            while (!cancellationToken.IsCancellationRequested)
             {
                 await messageHubClient.Connection.StopAsync();
                 return;

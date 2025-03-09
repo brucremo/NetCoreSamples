@@ -18,7 +18,7 @@ namespace NetCoreSamples.Broker.Worker.Workers
             broker = brokerService;
         }
 
-        public Task Run(CancellationToken? cancellationToken = null)
+        public Task Run(CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }

@@ -13,14 +13,33 @@ namespace NetCoreSamples.Broker.Worker.Workers
         /// </summary>
         readonly IPubSubBrokerService broker;
 
+        /// <summary>
+        /// The timer for the worker
+        /// </summary>
+        Timer? Timer { get; set; }
+
         public Publisher(IPubSubBrokerService brokerService)
         {
             broker = brokerService;
         }
 
-        public Task Run(CancellationToken? cancellationToken = null)
+        public Task Run(CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            Timer = new Timer(async _ =>
+                await PublishSomethingAsync(cancellationToken),
+                null,
+                TimeSpan.FromSeconds(30),
+                TimeSpan.FromSeconds(30));
+
+            return Task.CompletedTask;
+        }
+
+        async Task PublishSomethingAsync(CancellationToken cancellationToken = default)
+        {
+            await broker.PublishAsync(
+                "test", 
+                new { Message = "Hello, World!" }, 
+                cancellationToken);
         }
     }
 }

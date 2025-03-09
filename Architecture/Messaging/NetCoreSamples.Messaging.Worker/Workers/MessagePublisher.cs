@@ -28,11 +28,11 @@ namespace NetCoreSamples.Messaging.Worker
         }
 
         /// <inheritdoc/>
-        public async Task Run(CancellationToken? cancellationToken = null)
+        public async Task Run(CancellationToken cancellationToken = default)
         {
             await SetupHubConnection();
 
-            while (!cancellationToken.GetValueOrDefault().IsCancellationRequested)
+            while (!cancellationToken.IsCancellationRequested)
             {
                 await RetryPolicies.DefaultAsyncExceptionRetryPolicy<Exception>(5)
                     .ExecuteAsync(async () =>
@@ -49,7 +49,7 @@ namespace NetCoreSamples.Messaging.Worker
                         }
                     });
 
-                await Task.Delay(2000, cancellationToken.GetValueOrDefault());
+                await Task.Delay(2000, cancellationToken);
             }
 
             await messageHubClient.Connection.StopAsync();
