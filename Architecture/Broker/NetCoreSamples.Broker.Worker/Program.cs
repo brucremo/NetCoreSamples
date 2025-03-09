@@ -31,11 +31,10 @@ namespace NetCoreSamples.Broker.Worker
             return (services, configuration) =>
             {
                 services.ConfigureOptionsType<BrokerServiceOptions>(configuration);
+                services.AddInterfaceHostedService<INatsBrokerService, NatsBrokerService>();
                 services.AddSingleton<IHostEnvironment, HostingEnvironment>();
-
                 services.AddSingleton<IPubSubBrokerService, NatsBrokerService>();
                 services.AddSingleton<IStreamBrokerService, NatsBrokerService>();
-                services.AddInterfaceHostedService<INatsBrokerService, NatsBrokerService>();
             };
         }
     }

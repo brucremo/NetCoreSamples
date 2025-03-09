@@ -2,7 +2,7 @@ version: '3.4'
  
 x-worker-variables: &worker-variables
     WORKER_MODE: service
-    BrokerServiceOptions__ServerUrl: "http://host.docker.internal:4222" # Windows only!
+    BrokerServiceOptions__ServerUrl: "nats://host.docker.internal:4222" # Windows only!
     BrokerServiceOptions__Username: "testuser"
     BrokerServiceOptions__Password: "password"
 

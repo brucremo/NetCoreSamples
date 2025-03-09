@@ -19,7 +19,7 @@ namespace NetCoreSamples.Broker.Lib.Services
         /// <summary>
         /// The NATS client.
         /// </summary>
-        INatsClient? NatsClient { get; set; }
+        INatsClient NatsClient { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NatsBrokerService"/> class.
@@ -27,6 +27,7 @@ namespace NetCoreSamples.Broker.Lib.Services
         public NatsBrokerService(IOptions<BrokerServiceOptions> options)
         {
             this.options = options.Value;
+            NatsClient = GetNatsClient();
         }
 
         /// <inheritdoc />
@@ -70,14 +71,6 @@ namespace NetCoreSamples.Broker.Lib.Services
             };
 
             return new NatsClient(natsOptions);
-        }
-
-        void ThrowIfNatsClientIsNotInitialized()
-        {
-            if (NatsClient is null)
-            {
-                throw new InvalidOperationException("NATS client is not initialized.");
-            }
         }
     }
 }

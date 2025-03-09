@@ -1,5 +1,6 @@
 ﻿using NetCoreSamples.Broker.Lib;
 using NetCoreSamples.Worker.Lib;
+using Serilog;
 
 namespace NetCoreSamples.Broker.Worker.Workers
 {
@@ -18,9 +19,27 @@ namespace NetCoreSamples.Broker.Worker.Workers
             broker = brokerService;
         }
 
-        public Task Run(CancellationToken cancellationToken = default)
+        public async Task Run(CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            var subscribeTask1 = broker.SubscribeAsync<object>(
+                "subject1",
+                (data, cancellationToken) =>
+                {
+                    Log.Logger.Information($"Received message from subscription 1: {data}");
+                    return default;
+                },
+                cancellationToken).AsTask();
+
+            var subscribeTask2 = broker.SubscribeAsync<object>(
+                "subject2",
+                (data, cancellationToken) =>
+                {
+                    Log.Logger.Information($"Received message from subscription 2: {data}");
+                    return default;
+                },
+                cancellationToken).AsTask();
+
+            await Task.WhenAll(subscribeTask1, subscribeTask2);
         }
     }
 }

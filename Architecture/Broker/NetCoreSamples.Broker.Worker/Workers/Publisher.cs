@@ -13,11 +13,6 @@ namespace NetCoreSamples.Broker.Worker.Workers
         /// </summary>
         readonly IPubSubBrokerService broker;
 
-        /// <summary>
-        /// The timer for the worker
-        /// </summary>
-        Timer? Timer { get; set; }
-
         public Publisher(IPubSubBrokerService brokerService)
         {
             broker = brokerService;
@@ -25,21 +20,19 @@ namespace NetCoreSamples.Broker.Worker.Workers
 
         public Task Run(CancellationToken cancellationToken = default)
         {
-            Timer = new Timer(async _ =>
-                await PublishSomethingAsync(cancellationToken),
+            _ = new Timer(async _ =>
+                await broker.PublishAsync("subject1", new { Message = "This is a pub to subject1!" }, cancellationToken),
                 null,
-                TimeSpan.FromSeconds(30),
-                TimeSpan.FromSeconds(30));
+                TimeSpan.FromSeconds(2),
+                TimeSpan.FromSeconds(2));
+
+            _ = new Timer(async _ =>
+                await broker.PublishAsync("subject2", new { Message = "This is a pub to subject2!", Data = "The data here is different from sub1" }, cancellationToken),
+                null,
+                TimeSpan.FromSeconds(10),
+                TimeSpan.FromSeconds(10));
 
             return Task.CompletedTask;
-        }
-
-        async Task PublishSomethingAsync(CancellationToken cancellationToken = default)
-        {
-            await broker.PublishAsync(
-                "test", 
-                new { Message = "Hello, World!" }, 
-                cancellationToken);
         }
     }
 }

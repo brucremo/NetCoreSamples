@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Hosting;
-
-namespace NetCoreSamples.Broker.Lib
+﻿namespace NetCoreSamples.Broker.Lib
 {
     /// <summary>
     /// Stream broker service interface.
