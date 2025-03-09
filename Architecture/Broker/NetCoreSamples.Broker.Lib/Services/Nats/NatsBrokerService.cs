@@ -58,6 +58,10 @@ namespace NetCoreSamples.Broker.Lib.Services
             await DisposeAsync();
         }
 
+        /// <summary>
+        /// Configures the NATS client with the given options.
+        /// </summary>
+        /// <returns>A configured instance of <see cref="INatsClient"/></returns>
         INatsClient GetNatsClient()
         {
             var natsOptions = new NatsOpts

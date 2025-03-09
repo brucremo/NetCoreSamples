@@ -19,6 +19,7 @@ namespace NetCoreSamples.Broker.Worker.Workers
             broker = brokerService;
         }
 
+        /// <inheritdoc />
         public async Task Run(CancellationToken cancellationToken = default)
         {
             var subscribeTask1 = broker.SubscribeAsync<object>(

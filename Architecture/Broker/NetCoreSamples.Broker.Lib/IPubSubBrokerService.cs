@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Hosting;
-
-namespace NetCoreSamples.Broker.Lib
+﻿namespace NetCoreSamples.Broker.Lib
 {
     /// <summary>
     /// Represents a broker service capable of publishing and subscribing to messages.
