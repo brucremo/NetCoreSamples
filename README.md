@@ -21,18 +21,17 @@ dotnet build NetCoreSamples.sln
 
 - **Architecture**: Contains different architectural patterns and services.
   - **Broker**: Broker services and related libraries using NATS as a broker.
-  - **Caching**: Caching related services and configurations.
+  - **Caching**: Caching related services and configurations using Redis.
   - **Messaging**: Simple messaging services and related libraries using SignalR for live communication between applications. 
-- **Database**: Database related projects and scripts for MSSQL.
-- **Patterns**: Contains different design patterns and services.
+- **Database**: Database related projects and scripts for MSSQL and Postgres as an event store.
+- **Patterns**: Contains different design patterns and services that are used across multiple projects.
 - **Shared**: Shared libraries and domain models.
 
 ## Projects
 
 ### Broker
 
-- **NetCoreSamples.Broker.Consumer**: Consumer application for broker messages.
-- **NetCoreSamples.Broker.Publisher**: Publisher application for broker messages.
+- **NetCoreSamples.Broker.Worker**: Sample worker application for broker messages using pub/sub pattern or queue.
 - **NetCoreSamples.Broker.Lib**: Library for broker services.
 
 ### Caching
@@ -40,7 +39,7 @@ dotnet build NetCoreSamples.sln
 - **NetCoreSamples.Caching.Client**: Client application for caching.
 - **NetCoreSamples.Caching.Application**: Application layer for caching.
 - **NetCoreSamples.Caching.Lib**: Library for caching services.
-- **NetCoreSamples.Caching.Persistence**: Persistence layer for caching.
+- **NetCoreSamples.Caching.Persistence**: Persistence layer for the caching sample project.
 
 ### Messaging
 
@@ -50,10 +49,11 @@ dotnet build NetCoreSamples.sln
 
 ### Database
 
-- **NetCoreSamples.Database**: Database project and related scripts.
+- **NetCoreSamples.Database**: Database project and related scripts for MSSQL.
 
 ### Shared
 
+- **NetCoreSamples.DependencyInjection.Lib**: Library containing mostly common dependency injection extensions.
 - **NetCoreSamples.Domain**: Domain models. When this project is built, it will also setup the MSSQL DB as part of its pre-build events.
 - **NetCoreSamples.Logging.Lib**: Logging library.
 
