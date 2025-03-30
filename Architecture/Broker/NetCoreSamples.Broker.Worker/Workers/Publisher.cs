@@ -9,7 +9,7 @@ namespace NetCoreSamples.Broker.Worker.Workers
     public class Publisher : IWorker
     {
         /// <summary>
-        /// The message hub client service
+        /// The pub sub broker service
         /// </summary>
         readonly IPubSubBrokerService broker;
 

@@ -1,13 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting.Internal;
-using Microsoft.Extensions.Hosting;
 using NetCoreSamples.Worker.Lib;
-using NetCoreSamples.DependencyInjection.Lib.Extensions;
-using NetCoreSamples.Broker.Lib.Options;
-using NetCoreSamples.Broker.Lib;
-using NetCoreSamples.Broker.Lib.Services;
-using NetCoreSamples.Broker.Lib.Services.Nats;
+using System.Reflection;
+using NetCoreSamples.Broker.Lib.Extensions;
 
 namespace NetCoreSamples.Broker.Worker
 {
@@ -19,23 +14,36 @@ namespace NetCoreSamples.Broker.Worker
                 .WithCallingAssembly()
                 .UseSerilog();
 
-            builder.ConfigureWorker("Processor", BaseConfigureWorkersAction());
-            builder.ConfigureWorker("Publisher", BaseConfigureWorkersAction());
+            ConfigureWorkers(builder);
 
             var app = builder.Build();
             await app.Run();
         }
 
-        static Action<IServiceCollection, IConfiguration> BaseConfigureWorkersAction()
+        /// <summary>
+        /// Method to configure all <see cref="IWorker"> implementations in the assembly as they use the same configuration pattern and services in this sample.
+        /// </summary>
+        /// <param name="builder">The <see cref="WorkerApplicationBuilder"/>.</param>
+        static void ConfigureWorkers(WorkerApplicationBuilder builder)
         {
-            return (services, configuration) =>
+            Action<IServiceCollection, IConfiguration> ConfigureWorkersAction()
             {
-                services.ConfigureOptionsType<BrokerServiceOptions>(configuration);
-                services.AddInterfaceHostedService<INatsBrokerService, NatsBrokerService>();
-                services.AddSingleton<IHostEnvironment, HostingEnvironment>();
-                services.AddSingleton<IPubSubBrokerService, NatsBrokerService>();
-                services.AddSingleton<IStreamBrokerService, NatsBrokerService>();
-            };
+                return (services, configuration) =>
+                {
+                    services.AddBrokerServices(configuration);
+                };
+            }
+
+            var workerTypes = Assembly.GetExecutingAssembly()
+                .GetTypes()
+                .Where(t => t.IsClass && !t.IsAbstract && typeof(IWorker)
+                .IsAssignableFrom(t))
+                .Select(t => t.Name);
+
+            foreach (var workerType in workerTypes)
+            {
+                builder.ConfigureWorker(workerType, ConfigureWorkersAction());
+            }
         }
     }
 }

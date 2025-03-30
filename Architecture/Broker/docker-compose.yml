@@ -23,16 +23,17 @@ services:
       --user testuser 
       --pass password
 
-  # Worker 1 - Processor
-  netcoresamples.broker.processor.worker:
-    container_name: "NetCoreSamples.Broker.Processor.Worker"
-    image: ${DOCKER_REGISTRY-}netcoresamplesbrokerprocessorworker
+  # ----- PubSub Workers -----
+  # Worker 1 - Subscriber
+  netcoresamples.broker.subscriber.worker:
+    container_name: "NetCoreSamples.Broker.Subscriber.Worker"
+    image: ${DOCKER_REGISTRY-}netcoresamplesbrokersubscriberworker
     build:
       context: .
       dockerfile: NetCoreSamples.Broker.Worker/Dockerfile
     environment:
       <<: *worker-variables
-      WorkerOptions__Name: Processor
+      WorkerOptions__Name: Subscriber
     depends_on: 
       - netcoresamples.broker.nats
 
@@ -46,6 +47,46 @@ services:
     environment:
       <<: *worker-variables
       WorkerOptions__Name: Publisher
+    depends_on: 
+      - netcoresamples.broker.nats
+
+  # ----- Queue Workers -----
+  # Worker 1 - Producer
+  netcoresamples.broker.queueproducer.worker:
+    container_name: "NetCoreSamples.Broker.QueueProducer.Worker"
+    image: ${DOCKER_REGISTRY-}netcoresamplesbrokerqueueproducerworker
+    build:
+      context: .
+      dockerfile: NetCoreSamples.Broker.Worker/Dockerfile
+    environment:
+      <<: *worker-variables
+      WorkerOptions__Name: QueueProducer
+    depends_on: 
+      - netcoresamples.broker.nats
+
+  # Worker 2 - Consumer #1
+  netcoresamples.broker.queueconsumer.worker:
+    container_name: "NetCoreSamples.Broker.QueueConsumer.Worker"
+    image: ${DOCKER_REGISTRY-}netcoresamplesbrokerqueueconsumerworker
+    build:
+      context: .
+      dockerfile: NetCoreSamples.Broker.Worker/Dockerfile
+    environment:
+      <<: *worker-variables
+      WorkerOptions__Name: QueueConsumer
+    depends_on: 
+      - netcoresamples.broker.nats
+
+  # Worker 3 - Consumer #2
+  netcoresamples.broker.queueconsumer2.worker:
+    container_name: "NetCoreSamples.Broker.QueueConsumer2.Worker"
+    image: ${DOCKER_REGISTRY-}netcoresamplesbrokerqueueconsumerworker
+    build:
+      context: .
+      dockerfile: NetCoreSamples.Broker.Worker/Dockerfile
+    environment:
+      <<: *worker-variables
+      WorkerOptions__Name: QueueConsumer
     depends_on: 
       - netcoresamples.broker.nats
 

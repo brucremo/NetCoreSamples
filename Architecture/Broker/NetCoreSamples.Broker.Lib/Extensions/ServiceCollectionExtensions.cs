@@ -1,7 +1,10 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Hosting.Internal;
 using NetCoreSamples.Broker.Lib.Options;
-using NetCoreSamples.Broker.Lib.Services;
+using NetCoreSamples.Broker.Lib.Services.Nats;
+using NetCoreSamples.DependencyInjection.Lib.Extensions;
 
 namespace NetCoreSamples.Broker.Lib.Extensions
 {
@@ -17,10 +20,13 @@ namespace NetCoreSamples.Broker.Lib.Extensions
         /// <param name="configuration">The <see cref="IConfiguration"/></param>
         public static void AddBrokerServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services.Configure<BrokerServiceOptions>(configuration.GetSection(nameof(BrokerServiceOptions)));
+            services.ConfigureOptionsType<BrokerServiceOptions>(configuration);
+            services.AddSingleton<IHostEnvironment, HostingEnvironment>();
+
+            services.AddInterfaceHostedService<INatsBrokerService, NatsBrokerService>();
 
             services.AddSingleton<IPubSubBrokerService, NatsBrokerService>();
-            services.AddSingleton<IStreamBrokerService, NatsBrokerService>();
+            services.AddSingleton<IQueueBrokerService, NatsBrokerService>();
         }
     }
 }

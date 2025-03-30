@@ -7,14 +7,14 @@ namespace NetCoreSamples.Broker.Worker.Workers
     /// <summary>
     /// Represents a worker that processes requests from the broker service.
     /// </summary>
-    public class Processor : IWorker
+    public class Subscriber : IWorker
     {
         /// <summary>
         /// The message hub client service
         /// </summary>
         readonly IPubSubBrokerService broker;
 
-        public Processor(IPubSubBrokerService brokerService)
+        public Subscriber(IPubSubBrokerService brokerService)
         {
             broker = brokerService;
         }

@@ -2,9 +2,8 @@
 using NATS.Client.Core;
 using NATS.Net;
 using NetCoreSamples.Broker.Lib.Options;
-using NetCoreSamples.Broker.Lib.Services.Nats;
 
-namespace NetCoreSamples.Broker.Lib.Services
+namespace NetCoreSamples.Broker.Lib.Services.Nats
 {
     /// <summary>
     /// NATS broker service implementation.

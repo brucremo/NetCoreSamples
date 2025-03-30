@@ -19,5 +19,10 @@
         /// The password.
         /// </summary>
         public required string Password { get; set; }
+
+        /// <summary>
+        /// (Optional) The broker client identifier. Defaults to a new GUID.
+        /// </summary>
+        public Guid ClientIdentifier { get; set; } = Guid.NewGuid();
     }
 }

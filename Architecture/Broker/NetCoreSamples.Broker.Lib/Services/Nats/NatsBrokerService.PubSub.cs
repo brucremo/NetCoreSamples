@@ -1,4 +1,4 @@
-﻿namespace NetCoreSamples.Broker.Lib.Services
+﻿namespace NetCoreSamples.Broker.Lib.Services.Nats
 {
     public partial class NatsBrokerService
     {
