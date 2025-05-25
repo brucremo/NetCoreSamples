@@ -8,6 +8,7 @@ This repository contains various .NET Core samples demonstrating different archi
 
 - [.NET SDK](https://dotnet.microsoft.com/download)
 - [Docker](https://www.docker.com/get-started)
+- (Recommended)[Visual Studio 2022](https://visualstudio.microsoft.com/downloads/)
 
 ### Building the Project
 

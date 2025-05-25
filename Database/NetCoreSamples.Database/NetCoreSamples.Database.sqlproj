@@ -62,10 +62,14 @@
     <Folder Include="Scripts" />
   </ItemGroup>
   <ItemGroup>
+    <PostDeploy Include="Scripts\Script.PostDeployment1.sql" />
+    <Build Include="dbo\Tables\City.sql" />
     <Build Include="dbo\Tables\User.sql" />
     <Build Include="dbo\Tables\StateProvince.sql" />
     <Build Include="dbo\Tables\Country.sql" />
-    <PostDeploy Include="Scripts\Script.PostDeployment1.sql" />
+    <Build Include="dbo\Tables\Product.sql" />
+    <Build Include="dbo\Tables\Order.sql" />
+    <Build Include="dbo\Tables\OrderProduct.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Local_PublishToContainer.ps1" />
