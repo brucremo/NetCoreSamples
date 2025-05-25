@@ -9,7 +9,7 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: "Development"
       AllowedHosts: "*"
-      ConnectionStrings__DefaultConnection: "Data Source=host.docker.internal;Initial Catalog=NetCoreSamples.Database;TrustServerCertificate=true;User ID=sa;Password=P@ssw0rd"
+      ConnectionStrings__DefaultConnection: "Data Source=host.docker.internal:1433;Initial Catalog=NetCoreSamples.Database;TrustServerCertificate=true;User ID=sa;Password=P@ssw0rd"
       Redis__Endpoints__0__Host: "netcoresamples.caching.redis"
       Redis__Endpoints__0__Port: "6379"
       Redis__InstanceName: "WebClient"

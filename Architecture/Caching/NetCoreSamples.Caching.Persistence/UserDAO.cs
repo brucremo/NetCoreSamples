@@ -22,8 +22,6 @@ namespace NetCoreSamples.Caching.Persistence
         public async Task<IEnumerable<User>> GetAllAsync()
         {
             return await context.Users
-                .Include(x => x.StateProvince)
-                    .ThenInclude(x => x.Country)
                 .ToListAsync();
         }
     }

@@ -40,9 +40,7 @@ namespace NetCoreSamples.Caching.Application.Features.User.Handlers
                 return data.Select(u =>
                     new UserDTO
                     {
-                        Name = u.Username,
-                        Country = u.StateProvince.Country.Name,
-                        StateProvince = u.StateProvince.Name
+                        Name = u.Username
                     });
             }
         }
