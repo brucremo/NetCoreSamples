@@ -63,6 +63,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCoreSamples.Broker.Lib",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EventSourcing", "EventSourcing", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCoreSamples.EventSourcing.Lib", "Patterns\EventSourcing\NetCoreSamples.EventSourcing.Lib\NetCoreSamples.EventSourcing.Lib.csproj", "{6CB03C4A-B9B7-E4A1-FAA7-787FFEFD33FF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -139,6 +141,10 @@ Global
 		{8C6E3862-14B3-1482-EE7A-551ABDF1D36E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8C6E3862-14B3-1482-EE7A-551ABDF1D36E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8C6E3862-14B3-1482-EE7A-551ABDF1D36E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6CB03C4A-B9B7-E4A1-FAA7-787FFEFD33FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CB03C4A-B9B7-E4A1-FAA7-787FFEFD33FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CB03C4A-B9B7-E4A1-FAA7-787FFEFD33FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CB03C4A-B9B7-E4A1-FAA7-787FFEFD33FF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -166,6 +172,7 @@ Global
 		{FF1652EA-2FE9-2AE3-06BB-DA9128488385} = {5CC1908D-7D1C-41F8-88A5-389AA97A9A87}
 		{8C6E3862-14B3-1482-EE7A-551ABDF1D36E} = {5CC1908D-7D1C-41F8-88A5-389AA97A9A87}
 		{02EA681E-C7D8-13C7-8484-4AC65E1B71E8} = {B9C2B992-7372-4655-9867-9196F1424097}
+		{6CB03C4A-B9B7-E4A1-FAA7-787FFEFD33FF} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AB4E00F9-51F9-4158-BD32-A786C8DF9156}
