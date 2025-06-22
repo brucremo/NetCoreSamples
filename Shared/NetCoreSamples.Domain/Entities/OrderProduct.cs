@@ -5,7 +5,7 @@ namespace NetCoreSamples.Domain.Entities;
 
 public partial class OrderProduct
 {
-    public int OrderId { get; set; }
+    public Guid OrderId { get; set; }
 
     public int ProductId { get; set; }
 

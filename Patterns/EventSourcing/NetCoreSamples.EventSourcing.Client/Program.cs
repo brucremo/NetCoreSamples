@@ -1,13 +1,9 @@
-using NetCoreSamples.Logging.Lib;
-using NetCoreSamples.Caching.Lib.Extensions;
-using Microsoft.EntityFrameworkCore;
-using NetCoreSamples.Domain;
-using NetCoreSamples.Caching.Application.Features.Location.Handlers;
-using NetCoreSamples.Caching.Application.Interfaces;
-using NetCoreSamples.Caching.Persistence;
 using NetCoreSamples.Domain.Extensions;
+using NetCoreSamples.Logging.Lib;
+using NetCoreSamples.EventSourcing.Lib.Extensions;
+using NetCoreSamples.Domain.Projections;
 
-namespace NetCoreSamples.Caching.Client
+namespace NetCoreSamples.EventSourcing.Client
 {
     public class Program
     {
@@ -21,16 +17,18 @@ namespace NetCoreSamples.Caching.Client
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            builder.Services.AddMediatR(cfg => {
-                cfg.RegisterServicesFromAssembly(typeof(GetLocationHandlers).Assembly);
-            });
-
-            builder.ConfigureRedis();
             builder.ConfigureDbContext();
+            builder.ConfigureMarten(options =>
+            {
+                var connectionString = builder.Configuration.GetConnectionString("EventStoreConnection") 
+                    ?? throw new InvalidOperationException("Connection string 'EventStoreConnection' not found.");
 
-            // DAOs injection
-            builder.Services.AddTransient<ICountryDAO, CountryDAO>();
-            builder.Services.AddTransient<IUserDAO, UserDAO>();
+                options.Connection(connectionString);
+
+                options.DisableNpgsqlLogging = true;
+
+                OrderProjection.RegisterOptions(options);
+            });
 
             var app = builder.Build();
 

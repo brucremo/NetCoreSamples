@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using NetCoreSamples.Domain.Entities;
 
-namespace NetCoreSamples.Domain;
+namespace NetCoreSamples.Domain.Entities;
 
 public partial class SampleDbContext : DbContext
 {
@@ -38,7 +37,7 @@ public partial class SampleDbContext : DbContext
     {
         modelBuilder.Entity<City>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__City__3214EC071995F2A0");
+            entity.HasKey(e => e.Id).HasName("PK__City__3214EC07E5BCA6D2");
 
             entity.ToTable("City");
 
@@ -52,7 +51,7 @@ public partial class SampleDbContext : DbContext
 
         modelBuilder.Entity<Country>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Country__3214EC075B7AAE5F");
+            entity.HasKey(e => e.Id).HasName("PK__Country__3214EC07A7151ABB");
 
             entity.ToTable("Country");
 
@@ -61,14 +60,16 @@ public partial class SampleDbContext : DbContext
 
         modelBuilder.Entity<Order>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Order__3214EC07B242108A");
+            entity.HasKey(e => e.Id).HasName("PK__Order__3214EC07E415E553");
 
             entity.ToTable("Order");
+
+            entity.Property(e => e.Id).HasDefaultValueSql("(newid())");
         });
 
         modelBuilder.Entity<OrderProduct>(entity =>
         {
-            entity.HasKey(e => new { e.OrderId, e.ProductId }).HasName("PK__OrderPro__08D097A3E7EC4A57");
+            entity.HasKey(e => new { e.OrderId, e.ProductId }).HasName("PK__OrderPro__08D097A34A96B642");
 
             entity.ToTable("OrderProduct");
 
@@ -85,7 +86,7 @@ public partial class SampleDbContext : DbContext
 
         modelBuilder.Entity<Product>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Product__3214EC0710567B92");
+            entity.HasKey(e => e.Id).HasName("PK__Product__3214EC0791B3BEEF");
 
             entity.ToTable("Product");
 
@@ -95,7 +96,7 @@ public partial class SampleDbContext : DbContext
 
         modelBuilder.Entity<StateProvince>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__StatePro__3214EC076497C73B");
+            entity.HasKey(e => e.Id).HasName("PK__StatePro__3214EC07B5B6D9AB");
 
             entity.ToTable("StateProvince");
 
@@ -109,10 +110,11 @@ public partial class SampleDbContext : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__User__3214EC079C2B4FAB");
+            entity.HasKey(e => e.Id).HasName("PK__User__3214EC07C64A906C");
 
             entity.ToTable("User");
 
+            entity.Property(e => e.Id).HasDefaultValueSql("(newid())");
             entity.Property(e => e.Username).HasMaxLength(100);
         });
 

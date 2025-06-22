@@ -1,0 +1,33 @@
+name: netcoresamples-eventsourcing
+services:
+  # Web API
+  netcoresamples.eventsourcing.client:
+    container_name: "netcoresamples.eventsourcing.client"
+    image: ${DOCKER_REGISTRY-}netcoresampleseventsourcingclient
+    build:
+      context: .
+      dockerfile: NetCoreSamples.EventSourcing.Client/Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      AllowedHosts: "*"
+      ConnectionStrings__EventStoreConnection: "Host=host.docker.internal;Port=5432;Username=sa;Password=P@ssword;Database=postgres;Command Timeout=5"
+      ConnectionStrings__DefaultConnection: "Data Source=host.docker.internal:1433;Initial Catalog=NetCoreSamples.Database;TrustServerCertificate=true;User ID=sa;Password=P@ssw0rd"
+    depends_on: 
+      - netcoresamples.eventsourcing.eventstore
+
+  # Event Store Database 
+  netcoresamples.eventsourcing.eventstore:
+    container_name: "netcoresamples.eventsourcing.eventstore"
+    image: postgres:latest
+    environment:
+      POSTGRES_PASSWORD: "P@ssw0rd"
+      POSTGRES_USERNAME: "sa"
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - eventstore_data:/var/lib/postgresql/data
+      
+volumes:
+    eventstore_data:
+        external: false

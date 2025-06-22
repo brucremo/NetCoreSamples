@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[User] 
 (
-    [Id] INT IDENTITY (1, 1) NOT NULL,
+    [Id] UNIQUEIDENTIFIER DEFAULT NEWID(),
     [Username] NVARCHAR (100) NOT NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC)
 );
