@@ -16,12 +16,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\..\Shared\NetCoreSamples.Domain\NetCoreSamples.Domain.csproj" />
     <ProjectReference Include="..\..\..\Shared\NetCoreSamples.Logging.Lib\NetCoreSamples.Logging.Lib.csproj" />
+    <ProjectReference Include="..\NetCoreSamples.EventSourcing.Application\NetCoreSamples.EventSourcing.Application.csproj" />
     <ProjectReference Include="..\NetCoreSamples.EventSourcing.Lib\NetCoreSamples.EventSourcing.Lib.csproj" />
   </ItemGroup>
 

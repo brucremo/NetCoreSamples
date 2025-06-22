@@ -21,6 +21,8 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCoreSamples.Logging.Lib", "..\..\Shared\NetCoreSamples.Logging.Lib\NetCoreSamples.Logging.Lib.csproj", "{D592C56E-35B9-F259-0807-278F0D13E318}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCoreSamples.EventSourcing.Application", "NetCoreSamples.EventSourcing.Application\NetCoreSamples.EventSourcing.Application.csproj", "{BE2916D8-2991-49B2-92DD-8B82D2021270}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,10 @@ Global
 		{D592C56E-35B9-F259-0807-278F0D13E318}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D592C56E-35B9-F259-0807-278F0D13E318}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D592C56E-35B9-F259-0807-278F0D13E318}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE2916D8-2991-49B2-92DD-8B82D2021270}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE2916D8-2991-49B2-92DD-8B82D2021270}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE2916D8-2991-49B2-92DD-8B82D2021270}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE2916D8-2991-49B2-92DD-8B82D2021270}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

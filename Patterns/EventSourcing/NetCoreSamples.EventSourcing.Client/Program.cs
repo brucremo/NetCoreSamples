@@ -1,7 +1,7 @@
 using NetCoreSamples.Domain.Extensions;
 using NetCoreSamples.Logging.Lib;
-using NetCoreSamples.EventSourcing.Lib.Extensions;
 using NetCoreSamples.Domain.Projections;
+using NetCoreSamples.EventSourcing.Lib.Extensions;
 
 namespace NetCoreSamples.EventSourcing.Client
 {
@@ -12,6 +12,7 @@ namespace NetCoreSamples.EventSourcing.Client
             var builder = WebApplication.CreateBuilder(args);
 
             SerilogSetup.ConfigureSerilog(builder.Configuration);
+            builder.Services.AddSingleton(TimeProvider.System);
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();

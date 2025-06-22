@@ -10,7 +10,7 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: "Development"
       AllowedHosts: "*"
-      ConnectionStrings__EventStoreConnection: "Host=host.docker.internal;Port=5432;Username=sa;Password=P@ssword;Database=postgres;Command Timeout=5"
+      ConnectionStrings__EventStoreConnection: "Host=host.docker.internal;Port=5432;Username=postgres;Password=P@ssw0rd;Database=postgres;Command Timeout=5"
       ConnectionStrings__DefaultConnection: "Data Source=host.docker.internal:1433;Initial Catalog=NetCoreSamples.Database;TrustServerCertificate=true;User ID=sa;Password=P@ssw0rd"
     depends_on: 
       - netcoresamples.eventsourcing.eventstore
@@ -21,7 +21,7 @@ services:
     image: postgres:latest
     environment:
       POSTGRES_PASSWORD: "P@ssw0rd"
-      POSTGRES_USERNAME: "sa"
+      POSTGRES_USERNAME: "postgres"
     restart: always
     ports:
       - "5432:5432"
